@@ -1,7 +1,9 @@
 var express = require('express'); // import express
 var app = express(); // make express app
 
-var server = app.listen(3000);
+const PORT = process.env.PORT || 5000;
+var server = app.listen(PORT, () => console.log('Server is running on PORT: ', PORT));
+
 app.use(express.static('public'));
 
 var socket = require('socket.io');
@@ -16,3 +18,4 @@ function newConnection(socket) {
         socket.broadcast.emit('mouse', data);
     });
 };
+
