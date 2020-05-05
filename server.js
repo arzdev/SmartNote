@@ -34,10 +34,10 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
-    console.log('new connection ' + socket.id);
-    socket.on('mouse', function (data) {
-        console.log("Received: 'mouse' " + data.x + " " + data.y);
-        socket.broadcast.emit('mouse', data);
-    });
+  console.log('new connection ' + socket.id);
+  socket.on('mouse', function (data) {
+    console.log("Received: 'mouse' " + data.x + " " + data.y);
+    socket.broadcast.emit('mouse', data);
+  });
 };
 

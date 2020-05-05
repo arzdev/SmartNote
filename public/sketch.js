@@ -4,26 +4,20 @@ function setup() {
   // put setup code here
   createCanvas(windowWidth, windowHeight);
   background(255);
-  socket = io.connect('localhost:3000')
+  socket = io.connect('localhost:5000')
   socket.on('mouse', newDrawing);
 }
 
 function newDrawing(data) {
-  // noStroke();
   stroke(0);
-  // fill(255);
-  // ellipse(data.x, data.y, 15, 15);
-  line(data.x, data.y, data.px, data.py);
-
+  strokeWeight(23);
+  line(data.x, data.y, data.xp, data.xy);
 }
 
 function mouseDragged() {
-  // noStroke();
-  // fill(255);
   stroke(0);
   strokeWeight(23);
   console.log('Sending: ' + mouseX + ',' + mouseY);
-  // ellipse(mouseX, mouseY, 15, 15);
   line(mouseX, mouseY, pmouseX, pmouseY);
 
   var data = {
