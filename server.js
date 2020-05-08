@@ -5,6 +5,10 @@ const PORT = process.env.PORT || 5000;
 var server = app.listen(PORT, () => console.log('Server is running on PORT: ', PORT));
 var path = require('path');
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.static('public'));
 app.set('view engine', 'html');
@@ -22,6 +26,11 @@ app.get('/about', (req, res) => {
 
 app.get('/signup', (req, res) => {
   res.render('signup.html');
+});
+
+app.post('/myform', function (req, res) {
+  var myText = req.query.mytext; //mytext is the name of your input box
+  console.log(myText);
 });
 
 app.get('/canvas', (req, res) => {

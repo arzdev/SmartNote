@@ -1,4 +1,5 @@
 var socket;
+var user_color = "#000000";
 
 function setup() {
   // put setup code here
@@ -15,7 +16,7 @@ function newDrawing(data) {
 }
 
 function mouseDragged() {
-  stroke(0);
+  stroke(user_color);
   strokeWeight(23);
   console.log('Sending: ' + mouseX + ',' + mouseY);
   line(mouseX, mouseY, pmouseX, pmouseY);
@@ -32,3 +33,12 @@ function mouseDragged() {
 function draw() {
   // put drawing code here
 }
+
+document.addEventListener("DOMContentLoaded", (event) => { // make sure the website is fully downloaded
+
+  document.addEventListener("click", function (event) {
+    if (event.path[0].id == "change_color") {
+      user_color = event.path[1].childNodes[1].value; // get color from html color element
+    }
+  })
+})
