@@ -11,28 +11,31 @@ function setup() {
 }
 
 function newDrawing(data) {
-  stroke(user_color);
-  strokeWeight(pen_size);
+  stroke(data.color);
+  strokeWeight(data.pensize);
   line(data.x, data.y, data.xp, data.xy);
 }
 
-function mouseDragged() {
-  stroke(user_color);
-  strokeWeight(pen_size);
-  console.log('Sending: ' + mouseX + ',' + mouseY);
-  line(mouseX, mouseY, pmouseX, pmouseY);
-
-  var data = {
-    x: mouseX,
-    y: mouseY,
-    xp: pmouseX,
-    xy: pmouseY
-  }
-  socket.emit('mouse', data);
-}
 
 function draw() {
   // put drawing code here
+
+  if (mouseIsPressed) {
+    stroke(user_color);
+    strokeWeight(pen_size);
+    console.log('Sending: ' + mouseX + ',' + mouseY);
+    line(mouseX, mouseY, pmouseX, pmouseY);
+
+    var data = {
+      x: mouseX,
+      y: mouseY,
+      xp: pmouseX,
+      xy: pmouseY,
+      pensize: pen_size,
+      color: user_color,
+    }
+    socket.emit('mouse', data);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", (event) => { // make sure the website is fully downloaded
@@ -48,5 +51,4 @@ document.addEventListener("DOMContentLoaded", (event) => { // make sure the webs
   rangeslider.oninput = function () {
     pen_size = rangeslider.value;
   }
-
 })
