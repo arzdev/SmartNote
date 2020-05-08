@@ -1,5 +1,6 @@
 var socket;
 var user_color = "#000000";
+var pen_size = 23;
 
 function setup() {
   // put setup code here
@@ -10,14 +11,14 @@ function setup() {
 }
 
 function newDrawing(data) {
-  stroke(0);
-  strokeWeight(23);
+  stroke(user_color);
+  strokeWeight(pen_size);
   line(data.x, data.y, data.xp, data.xy);
 }
 
 function mouseDragged() {
   stroke(user_color);
-  strokeWeight(23);
+  strokeWeight(pen_size);
   console.log('Sending: ' + mouseX + ',' + mouseY);
   line(mouseX, mouseY, pmouseX, pmouseY);
 
@@ -36,9 +37,16 @@ function draw() {
 
 document.addEventListener("DOMContentLoaded", (event) => { // make sure the website is fully downloaded
 
-  document.addEventListener("click", function (event) {
-    if (event.path[0].id == "change_color") {
-      user_color = event.path[1].childNodes[1].value; // get color from html color element
-    }
-  })
+  // Change color
+  var colorHTML = document.getElementById("color");
+  colorHTML.oninput = function () {
+    user_color = colorHTML.value;
+  }
+
+  // Slider for Pen Size
+  var rangeslider = document.getElementById("penSlider");
+  rangeslider.oninput = function () {
+    pen_size = rangeslider.value;
+  }
+
 })
