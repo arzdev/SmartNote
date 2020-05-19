@@ -4,6 +4,7 @@ var pen_size;
 
 function setup() {
   // put setup code here
+  console.log('\n\n\ngoing through setup!\n\n\n')
   createCanvas(windowWidth, windowHeight);
   background(255);
 
@@ -28,6 +29,7 @@ function setup() {
   firebase.analytics();
 
   console.log(firebase)
+  console.log('\n\n\ngoing through setup!\n\n\n')
 }
 
 function newDrawing(data) {
