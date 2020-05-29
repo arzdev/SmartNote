@@ -13,8 +13,17 @@
   </style>
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
   <script src="../p5.js"></script>
+
+  <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
+
+
+  <!-- original code -->
   <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/init.js"></script>
+
   <script src="sketch.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="../css/style_canvas.css">
@@ -32,6 +41,19 @@
     </div>
   </div>
 
+  <!-- start of my new code -->
+  <div id ="canvascontainer"></div>
+
+  <p>
+    <button id="saveButton">save</button>
+    <button id="clearButton">clear</button>
+  </p>
+
+  <p>
+    <ol id="drawinglist">
+
+    </ol>
+<!-- end of my new test code -->
   <img src="https://img.icons8.com/cotton/64/000000/pen.png" style="width:60px;height:60px;"/>
   <img src="https://img.icons8.com/color/96/000000/pencil-eraser.png" style="width:60px;height:60px;"/>
   <img src="https://img.icons8.com/ios/100/000000/text.png" style="width:60px;height:60px;"/>
