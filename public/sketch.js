@@ -7,11 +7,14 @@ var drawing = [];
 var currentPath=[];
 var isDrawing=false;
 // load up drawing function if u can
+var firebase = require('firebase/app');
+require('firebase/auth');
+require('firebase/database');
 
 function setup() {
   // put setup code here
   console.log('\n\n\ngoing through setup!\n\n\n')
-  createCanvas(windowWidth, windowHeight);
+  canvas=createCanvas(windowWidth, windowHeight);
   background(255);
   user_color = "#000000";
   pen_size = 20;
@@ -22,25 +25,30 @@ function setup() {
   canvas.parent('canvascontainer');
   canvas.mouseReleased(endPath);
 
-  var saveButton=select('#saveButton');
+  var saveButton = select('#saveButton');
+  saveButton.mousePressed(saveDrawing);
+
+  var clearButton = select('#clearButton');
   clearButton.mousePressed(clearDrawing);
 
 
-  var firebaseConfig = {
-      apiKey: "AIzaSyB4K8mPKt6OQ-K8I7Yw9ru3zA67AiOA1BM",
-      authDomain: "smartnote-84afd.firebaseapp.com",
-      databaseURL: "https://smartnote-84afd.firebaseio.com",
-      projectId: "smartnote-84afd",
-      storageBucket: "smartnote-84afd.appspot.com",
-      messagingSenderId: "505055501571",
-      appId: "1:505055501571:web:5170c1ee39e32cbe8b1d36",
-      measurementId: "G-KRYK4JVRT0"
+  var config = {
+      apiKey: "AIzaSyBct07FmogeLJcN0keelvtK9lLrFmSEAb4",
+      authDomain: "smartnote-1590114095005.firebaseapp.com",
+      databaseURL: "https://smartnote-1590114095005.firebaseio.com",
+      projectId: "smartnote-1590114095005",
+      storageBucket: "smartnote-1590114095005.appspot.com",
+      messagingSenderId: "667040488592",
+      appId: "1:667040488592:web:7b70f9deba4fb1f2ba4c15",
+      measurementId: "G-2680TNSY38"
     };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  /*firebase.initializeApp(firebaseConfig);
   database=firebase.database();
   firebase.analytics();
-  console.log(firebase);
+  console.log(firebase);*/
+  firebase.initializeApp(config);
+  database = firebase.database();
 
   var params=getURLParams();
   console.log(params);
@@ -166,6 +174,10 @@ function showDrawing(key){
 
 function clearDrawing(){
   drawing=[];
+}
+
+function mousePressed() {
+  let d = 10;
 }
 
 
