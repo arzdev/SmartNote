@@ -35,17 +35,13 @@ function setup() {
 }
 
 function newDrawing(data) {
-  console.log('on mouse detected:')
-  console.log(data)
   stroke(data.color);
   strokeWeight(data.pensize);
   line(data.x, data.y, data.xp, data.xy);
 }
 
-
 function draw() {
   // put drawing code here
-
   if (mouseIsPressed) {
     stroke(user_color);
     strokeWeight(pen_size);
@@ -61,7 +57,6 @@ function draw() {
       color: user_color
     }
     socket.emit('mouse', data);
-    console.log(socket.id)
     drawing.push(data);
   }
 }

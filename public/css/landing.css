@@ -1,5 +1,6 @@
 body {
   margin: 0px;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .topnav {
@@ -52,6 +53,7 @@ html {
 
 #buttons{
   display: flex;
+  font-family: 'Quicksand', sans-serif;
   justify-content: center;
 }
 
@@ -61,6 +63,11 @@ img{
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.g-signin2
+{
+    float: center;
 }
 
 button {
