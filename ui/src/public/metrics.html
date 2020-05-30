@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> About Us </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+    window.onload=function(){
+    myFunction();
+    myFunction2();
+    }
+  </script>
+  </head>
+  <style type='text/css'>
+.header {
+  padding: 30px;
+  font-family: Arial;
+  text-align: left;
+  background: #3fa3b0;
+  color: white;
+  opacity: 0.8;
+  font-size: 15px;
+}
+
+.btn-group button {
+  padding: 25px;
+  font-size: 15px;
+  background-color: #d12424; 
+  border: 1px solid white; 
+  color: white; 
+  cursor: pointer; 
+  float: right; 
+}
+
+.registered_users
+{
+    padding: 20px;
+    background-color: #d12424;
+    border: 1px solid white;
+    height: 80px;
+}
+
+.table_news {
+  color:grey;
+  font-size: 20px;
+  width: 70%;
+  height: auto;
+  text-align: left;
+  font-family: Arial;
+
+}
+
+.progress
+{
+   padding: 50px;
+   background-color: #3fa3b0;
+   border: 1px solid white;
+   height: 70px;
+}
+.body-text
+{
+  padding: 50px;
+  font-family: Arial;
+  text-align: center;
+}
+
+.body-text
+{
+  font-family: Arial;
+  font-size: 30px;
+  text-align: center;
+}
+
+.user_count_label
+{ 
+  display:block;
+  font-size: 30px;
+  font-family: Arial;
+  text-align: center;
+  color: white; 
+}
+
+
+  </style>
+ <body>
+    <div class="header">
+  <div class="btn-group">
+    <form name='about_us' method='GET' action='/about_us'>
+    <button> About Us </button>
+    </form>
+
+    <form name='newsletter' method='GET' action='/newsletter'>
+    <button> Newsletter </button>
+    </form>
+
+    <form name='pricing' method='GET' action='/pricing'>
+    <button> Pricing </button>
+    </form>
+
+    <form name='metrics' method='GET' action='/metrics'>
+    <button> Metrics </button>
+    </form>
+
+    <form name='features' method='GET' action='/features'>
+    <button> Features </button>
+    </form>
+         
+    <form name='front' method='GET' action='/front'>
+    <button> Home </button>
+    </form>
+
+  </div>
+  <h1>SmartNote</h1>
+</div>
+
+<div class="body-text">
+  <h1> SmartNote Metrics! </h1>
+</div>
+
+<div class="registered_users" style="text-align: center;"> 
+  <span id='user_count' class="user_count_label">*</span>
+  <span class="user_count_label"> Prospective Customers! </span>
+</div>
+
+<div class="progress" style="text-align: center;"> 
+  <span class="user_count_label" id="user_count_label"></span>
+</div>
+
+<center>
+<table class="table_news">
+    <tr>
+        <th> News </th>
+        <th> Date </th>
+    </tr>
+</table>
+</center>
+
+
+<script>
+function myFunction() {
+
+  setInterval(function()
+  { 
+    
+    var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() 
+    {
+      if (this.readyState == 4 && this.status == 200) {
+
+        var responseText_JSON = JSON.parse(this.responseText)
+
+        document.getElementById("user_count").innerHTML = responseText_JSON["user_count"];
+        document.getElementById("user_count_label").innerHTML = responseText_JSON["progress"];
+
+      }
+    };
+
+  xhttp.open("GET", "num_users", true);
+  xhttp.send();
+
+  
+  }, 1000);
+}
+
+</script>
+
+<script>
+function myFunction2()
+{
+  $.getJSON("news_data",
+function (data) {
+    var tr;
+    for (var i = 0; i < data.length; i++) {
+        tr = $('<tr/>');
+        tr.append("<td>" + data[i].news + "</td>");
+        tr.append("<td>" + data[i].date + "</td>");
+        $('table').append(tr);
+    }
+});
+
+}
+</script>
+  </body>
+</html>

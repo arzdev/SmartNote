@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> About Us </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <style type='text/css'>
+.header {
+  padding: 30px;
+  font-family: Arial;
+  text-align: left;
+  background: #3fa3b0;
+  color: white;
+  opacity: 0.8;
+  font-size: 15px;
+}
+
+.btn-group button {
+  padding: 25px;
+  font-size: 15px;
+  background-color: #d12424; 
+  border: 1px solid white; 
+  color: white; 
+  cursor: pointer; 
+  float: right; 
+}
+.body-text
+{
+  padding: 50px;
+  font-family: Arial;
+  text-align: center;
+}
+
+li{
+    font-family: Futara;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+  </style>
+ <body>
+    <div class="header">
+  <div class="btn-group">
+     <form name='about_us' method='GET' action='/about_us'>
+    <button> About Us </button>
+    </form>
+
+    <form name='newsletter' method='GET' action='/newsletter'>
+    <button> Newsletter </button>
+    </form>
+
+    <form name='pricing' method='GET' action='/pricing'>
+    <button> Pricing </button>
+    </form>
+
+    <form name='metrics' method='GET' action='/metrics'>
+    <button> Metrics </button>
+    </form>
+
+    <form name='features' method='GET' action='/features'>
+    <button> Features </button>
+    </form>
+         
+    <form name='front' method='GET' action='/front'>
+    <button> Home </button>
+    </form>
+
+  </div>
+  <h1>SmartNote</h1>
+</div>
+<div class="body-text">
+  <h1> SmartNote has many features! </h1>
+  <ul>
+    <li> Multi-color brushes and different brush types </li>
+    <li> Keyboard capability with different font capability </li>
+    <li> Save notes to the cloud or as a PDF </li>
+    <li> Import PDFs to mark up existing notes </li>
+    <li> Broadcasts active users’ mouse location to help with real-time collaboration </li>
+  </ul>  
+</div>      
+  </body>
+</html>
