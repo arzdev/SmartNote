@@ -20,9 +20,8 @@ app.set('views', path.join(__dirname, 'public/html'));
 
 let roomid;
 let URLs = {}
-const RoomManager = require('./RoomManager.js')
-var room_manager = new RoomManager();
-
+var RoomManager = require('./RoomManager.js')
+var room_manager = new RoomManager().getInstance()
 
 app.get('/', (req, res) => {
   res.render('landing.html')
@@ -72,13 +71,30 @@ io.sockets.on('connection', newConnection);
 function newConnection(socket) {
   socket.join(roomid);
   socket.roomid = roomid;
-  room_manager.add_user(socket.oomid, socket.id);
+  room_manager.add_user(socket.roomid, socket.id);
   console.log('new connection ' + socket.id + 'in room: ' + roomid);
+  host_id = room_manager.get_host_socket(roomid)
+  console.log('host socket is: ' + host_id)
+
+  if(host_id !== socket.id){
+    updateCanvas(host_id, socket.id, roomid)
+  }
 
   socket.on('mouse', function (data) {
     console.log("Received: 'mouse' " + data.x + " " + data.y + 'from room" ' + socket.roomid);
     socket.to(socket.roomid).emit('mouse', data)
-    //socket.broadcast.emit('mouse', data);
+    console.log('on mouse')
+    console.log(socket.id)
+    room_manager.push_stroke(roomid, data)
   });
 };
+
+function updateCanvas(host_id, user_socket, roomid){
+  host_socket = io.sockets.connected[host_id]
+  history = room_manager.get_history(roomid)
+  for(event in history){
+    stroke = history[event]["stroke"]
+    host_socket.to(user_socket).emit('mouse', stroke)
+  }
+}
 
