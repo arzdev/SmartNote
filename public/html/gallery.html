@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang='en'>
+<header>
+  <title> Gallery </title>
+  <link rel="stylesheet" type="text/css" href="../css/gallery.css">
+</header>
+
+<head>
+	<script>
+	var xhttp = new XMLHttpRequest();
+	 xhttp.onreadystatechange = function() 
+    {
+      if (this.readyState == 4 && this.status == 200) {
+        //var responseText_JSON = JSON.stringify(this.responseText)
+		//console.log(this.responseText)
+		var responseText_JSON = JSON.parse(this.responseText)
+		//console.log(responseText_JSON)
+
+		for (var key in responseText_JSON) {
+    		if (responseText_JSON.hasOwnProperty(key)) {
+        		console.log(key + " -> " + responseText_JSON[key]);
+
+				var imageDiv = document.createElement("img");
+				imageDiv.src = String(responseText_JSON[key])
+				imageDiv.setAttribute('class', 'feature_image');
+
+				var newDiv = document.createElement("div");
+				var aDiv = document.createElement("a");
+				aDiv.setAttribute('href', 'http://www.google.com');
+
+				newDiv.class = "item"
+				newDiv.appendChild(aDiv).appendChild(imageDiv)
+
+				document.getElementById("wrapper").appendChild(newDiv);
+    		}
+		}
+     }
+    };
+
+	xhttp.open("GET", "get_images", true);
+  	xhttp.send();
+	</script>
+</head>
+
+<body>
+
+<form method="get">
+		<button type="submit" formaction="/canvas" id="new_canvas"> New Canvas </button>
+</form>
+
+<div class="wrapper" id="wrapper">
+</div>
+
+
+</body>
+</html>

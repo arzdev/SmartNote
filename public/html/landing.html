@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="google-signin-client_id" content="758782554681-f2unkbc8tduhuo8k0jmspvnp863jafi2.apps.googleusercontent.com">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
+  </head>
+  
+  <header>
+    <title>SmartNote</title>
+    <link rel="stylesheet" type="text/css" href="../css/landing.css">
+  </header>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <body>    
+    <br>
+    <div id='header'>
+      SmartNote
+    </div>
+    <br>
+
+    <div id='description'>
+        Organize your thoughts on any device!
+    </div>
+
+    <div id='features'>
+        Work by yourself or in a team to write and draw notes or ideas.<br>
+        Keep all your work in one organized place.<br><br>
+
+        It's simple to get started, just login in with Google and then click Gallery!<br><br>
+    </div>
+
+    <!--div id='picture'-->
+      <!--img src="../img/pngwave.png"-->
+    <!--/div-->
+
+    <form id='buttons' method="get">
+      <button type='submit' formaction="/about"> About Us </button>
+      <button type='submit' formaction="/signup"> Mailing List </button>
+      <button type='submit' formaction="/canvas" id="try_it"> Try It! </button>
+      <!--button type='submit' formaction="/gallery" id="gallery" style="display: none;"> Gallery </button-->
+    </form>
+
+    <form id='buttons' method="get">
+    <div>
+      <input name="id" id="googleID" value="" style="display: none;">
+    </div>
+
+    <button type='submit' id="gallery" formaction="/gallery" style="display: none;"> Gallery </button>
+    </form>
+
+
+    <center>
+      <br>
+      <div id="my-signin2"></div>
+      <br>
+    </center>
+
+
+    <script>
+    function onSuccess(googleUser) {
+      // console.log('Logged in as: ' + googleUser.getBasicProfile().getName());            
+      // console.log('Image URL: ' + googleUser.getBasicProfile().getImageUrl());
+
+      var gallery = document.getElementById("gallery");
+      var try_it = document.getElementById("try_it");
+
+      try_it.style.display = "none";
+      gallery.style.display = "block";
+
+      var elem = document.getElementById("googleID");
+      elem.value = googleUser.getBasicProfile().getId();
+    }
+    function onFailure(error) {
+      console.log(error);
+
+      var gallery = document.getElementById("gallery");
+      var try_it = document.getElementById("try_it");
+      
+      try_it.style.display = "block";
+      gallery.style.display = "none";
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+    </script>
+    
+    <center>
+    <a href="#" onclick="signOut();">Sign out</a>
+    </center>
+    <script>
+      function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+
+        var gallery = document.getElementById("gallery");
+        var try_it = document.getElementById("try_it");
+      
+        try_it.style.display = "block";
+        gallery.style.display = "none";
+      });
+      }
+    </script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+  </body>
+</html>

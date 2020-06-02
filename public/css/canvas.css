@@ -1,0 +1,17 @@
+.top-bar {
+  display: flex;
+  background: rgb(181, 181, 181); 
+  height: 50px;
+}
+.color {
+  float: left;
+  /* width: 200px; */
+  /* background: lightblue;*/
+  /* Just so it's visible */
+}
+.name_label {
+  flex: 1;
+  /* Grow to rest of container */
+  /* background: lightgreen; */
+  /* Just so it's visible */
+}
