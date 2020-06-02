@@ -55,11 +55,6 @@ function newDrawing(data) {
 }
 
 function draw() {
-  // put drawing code here
-  /*
-  if (mouseIsPressed && writingText == false && placingText == false) {
-    makeLine()
-  }*/
   if(mouseIsPressed){
     if(placingText){
       console.log(pen_size);
@@ -130,7 +125,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // make sure the webs
   text_form.addEventListener("submit", textSubmission, false);
   text_form.style.display = "none";
   text_icon.onclick = displayTextSubmission
-
+  
   // Change color
   var colorHTML = document.getElementById("color");
   colorHTML.oninput = function () {
@@ -141,6 +136,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // make sure the webs
   var rangeslider = document.getElementById("penSlider");
   rangeslider.oninput = function () {
     pen_size = rangeslider.value;
-    console.log(pen_size);
   }
-})
+
+});

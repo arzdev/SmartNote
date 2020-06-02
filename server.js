@@ -26,10 +26,13 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Instance of Firebase Datebase
-var database = firebase.database();
 require('dotenv').config()
 
 var googleID = "";
+var googleMail = "";
+var googlePic = "";
+var googleName = "";
+var imgDatabase = "";
 
 const PORT = process.env.PORT || 5000;
 var server = app.listen(PORT, () => console.log('Server is running on PORT: ', PORT));
@@ -66,13 +69,27 @@ app.get('/signup', (req, res) => {
 app.get('/gallery', (req, res) => {
   var url = req.query.id;
   console.log(url); // prints value
+  var ref = firebase.database().ref("users/" + url + "/image");
 
-  writeUserData(url);
+  ref.on("value", function (snapshot) {
+    imgDatabase = JSON.stringify(snapshot.val());
+    // console.log(imgDatebase)
+
+  }, function (error) {
+    console.log("Error: " + error.code);
+  });
+
+  // writeUserData(url);
   res.render('gallery.html');
 });
 
 app.post('/myform', function (req, res) {
   var myText = req.query.mytext; //mytext is the name of your input box
+  console.log(myText);
+});
+
+app.post('/save', function (req, res) {
+  var myText = req.query.id; //mytext is the name of your input box
   console.log(myText);
 });
 
@@ -84,6 +101,11 @@ app.get('/canvas', (req, res) => {
     console.log('no roomid specified.  Creating new room.')
     roomid = createRandomURL();
   }
+});
+
+app.get('/get_images', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.end(imgDatabase);
 });
 
 function createRandomURL() {
@@ -103,12 +125,6 @@ var io = socket(server);
 console.log(server);
 
 io.sockets.on('connection', newConnection);
-//io.sockets.on('disconnect', newDisconnect);
-
-function newDisconnect(socket) {
-  console.log('diconnect detected: ' + socket.id)
-  room_manager.remove_user(socket.id);
-}
 
 function newConnection(socket) {
   socket.join(roomid);
@@ -116,7 +132,7 @@ function newConnection(socket) {
   room_manager.add_user(socket.roomid, socket.id);
   host_id = room_manager.get_host_socket(roomid)
 
-  if(host_id !== socket.id){
+  if (host_id !== socket.id) {
     updateCanvas(host_id, socket.id, roomid)
   }
   socket.on('mouse', function (data) {
@@ -145,6 +161,23 @@ function writeUserData(userId) {
   googleID = userId;
   firebase.database().ref('users/' + userId).set({
     username: "TEMP",
+  })
+};
+
+function updateCanvas(host_id, user_socket, roomid) {
+  host_socket = io.sockets.connected[host_id]
+  history = room_manager.get_history(roomid)
+  for (event in history) {
+    stroke = history[event]["stroke"]
+    host_socket.to(user_socket).emit('mouse', stroke)
+  }
+}
+
+function writeUserData(userId, userMail, userName, userPic) {
+  googleID = userId;
+
+  firebase.database().ref('users/' + userId).set({
+    name: "TEMP",
     email: "TEMP",
     profile_picture: "TEMP"
   });

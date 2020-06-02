@@ -3,3 +3,42 @@ html {
   background-size: cover;
   font-size: 16pt;
 }
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 15px;
+}
+
+.body
+{
+    background: white;
+}
+
+.wrapper
+{
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 100px;
+}
+
+.item
+{
+    padding: 1px;
+}
+
+.feature_image
+{
+    /*height:100%;
+    width:100%;
+
+    max-height: 300px;
+    max-width: 300px;
+    */
+    max-width: 100% !important;
+    height: auto;
+    width: auto;
+
+}

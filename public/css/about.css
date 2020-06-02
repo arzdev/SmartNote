@@ -38,8 +38,8 @@ body {
 #team_header{
   text-align:center;
   font-size: 2rem; 
-  padding-bottom: calc(1rem + 8vh)
-  padding-top: calc(1rem + 8vh)
+  padding-bottom: calc(1rem + 8vh);
+  padding-top: calc(1rem + 8vh);
   font-weight: bold;
 }
 

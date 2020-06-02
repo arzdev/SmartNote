@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../css/canvas.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> SmartNote Canvas </title>
   <style>
@@ -56,6 +58,25 @@
     <p contentEditable="true" id="name_label"> WhiteBoard Name </p>
   </div>
 
-  
+  <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+   <form method="post" target="dummyframe">
+    <div>
+      <input name="id" id="canvasID" value="345" style="display: none;">
+    </div>
+
+    <button type='submit' id="save" formaction="/save"> save </button>
+    </form>
+
+  <script>
+    function saveButton()
+    {
+      var canvasImage_JSON = document.getElementById("defaultCanvas0");
+      var canvasImage_JSON_2 = canvasImage_JSON.toDataURL();
+      // console.log(canvasImage_JSON_2)
+      //var elem = document.getElementById("canvasImage");
+      //elem.value = canvasImage_JSON_2;
+    }
+  </script>
 </body>
 </html>
