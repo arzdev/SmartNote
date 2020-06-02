@@ -1,7 +1,13 @@
-#top-bar {
-  display: flex;
-  background: rgb(181, 181, 181); 
-  height: 50px;
+#top_bar {
+  display: inline-block;
+  background: #add8e6; 
+  width: 100%;
+  border-bottom: 2px solid black;
+  height: 4rem;
+}
+
+#top_bar > *{
+cursor: pointer;  
 }
 #color {
   float: left;
@@ -10,8 +16,29 @@
   /* Just so it's visible */
 }
 #name_label {
-  flex: 1;
+  font-weight: bold;
+  font-size: 2rem;
+  width: max-content;
+  display: inline-block;
+  padding-left: 2rem;
   /* Grow to rest of container */
   /* background: lightgreen; */
   /* Just so it's visible */
+}
+
+html{
+  z-index: 1;
+}
+
+#text_prompt {
+z-index: 1000;
+background: rgb(255,255,255);
+position:absolute;
+border: 1px solid black;
+top: 30%;
+left: 30%;
+}
+
+.color_section > *{
+  cursor: pointer;  
 }

@@ -103,6 +103,12 @@ var io = socket(server);
 console.log(server);
 
 io.sockets.on('connection', newConnection);
+//io.sockets.on('disconnect', newDisconnect);
+
+function newDisconnect(socket) {
+  console.log('diconnect detected: ' + socket.id)
+  room_manager.remove_user(socket.id);
+}
 
 function newConnection(socket) {
   socket.join(roomid);
@@ -117,14 +123,21 @@ function newConnection(socket) {
     socket.to(socket.roomid).emit('mouse', data)
     room_manager.push_stroke(roomid, data)
   });
+
+  socket.on('disconnect', function() {
+    console.log('diconnect detected: ' + socket.id)
+    room_manager.remove_user(socket.id);
+  });
 };
 
 function updateCanvas(host_id, user_socket, roomid){
   host_socket = io.sockets.connected[host_id]
-  history = room_manager.get_history(roomid)
-  for(event in history){
-    stroke = history[event]["stroke"]
-    host_socket.to(user_socket).emit('mouse', stroke)
+  if(typeof host_socket !== 'undefined'){
+    history = room_manager.get_history(roomid)
+    for(event in history){
+      stroke = history[event]["stroke"]
+      host_socket.to(user_socket).emit('mouse', stroke)
+    }
   }
 }
 

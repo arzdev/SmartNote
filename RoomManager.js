@@ -1,6 +1,7 @@
 class RoomManager{
   constructor(){
     this.rooms = {}
+    this.socketMap = {}
   }
 
   add_room(room_name){
@@ -26,8 +27,22 @@ class RoomManager{
     return room_name in this.rooms
   }
 
+  remove_user(user){
+    let room_name = this.socketMap[user]
+    if(typeof room_name !== 'undefined'){
+      let users = this.rooms[room_name]["users"]
+      for(var i = users.length - 1; i >= 0; i--) {
+        if(users[i] === user) {
+          users.splice(i, 1);
+          console.log('disconnect removed!')
+        }
+      }
+    }
+  }
+
   add_user(room_name, user){
     let room;
+    this.socketMap[user] = room_name
     if(!this.room_exists(room_name)){
       room = this.add_room(room_name)
     }
