@@ -2,10 +2,11 @@ var socket;
 var user_color;
 var pen_size;
 var drawing = [];
-var writingText = false;
+var fillingForm = false;
 var placingText = false;
 var input_text = "";
 var font_size = 8;
+var roomId = "";
 
 function setup() {
   // put setup code here
@@ -16,6 +17,7 @@ function setup() {
   pen_size = 20;
 
   socket = io.connect('localhost:5000')
+  socket.on('room', getRoomId);
   socket.on('mouse', newDrawing);
 
   /*
@@ -35,6 +37,12 @@ function setup() {
   console.log(firebase)
   */
 
+}
+
+function getRoomId(data){
+  roomId = data;
+  console.log('got it!')
+  console.log(roomId);
 }
 
 function newDrawing(data) {
@@ -74,7 +82,7 @@ function draw() {
       drawing.push(data);
       setTimeout(function(){ placingText = false; }, 500);
     }
-    else if(writingText == false && placingText == false){
+    else if(fillingForm == false && placingText == false){
       makeLine()
     }
   }
@@ -102,7 +110,7 @@ function makeLine(){
 }
 
 function textSubmission(e){
-  writingText = false;
+  fillingForm = false;
   placingText = true;
   e.preventDefault();
   input_text = e.target.elements.words.value
@@ -111,17 +119,74 @@ function textSubmission(e){
 }
 
 function displayTextSubmission(){
-  writingText = true;
-  document.getElementById("text_form").style.display = "block";
-  console.log('before:')
-  console.log(pen_size)
-  strokeWeight(1);
+  if(!fillingForm){
+    fillingForm = true;
+    document.getElementById("text_form").style.display = "block";
+    console.log('before:')
+    console.log(pen_size)
+    strokeWeight(1);
+  }
+}
+
+function sliderSubmission(e){
+  e.preventDefault();
+  fillingForm = false;
+  thickness = e.target.elements.penSlider.value
+  strokeWeight(thickness)
+  document.getElementById("slider").style.display = "none";
+}
+
+function displayThicknessSlider(){
+  if(!fillingForm){
+    slider = document.getElementById("slider") 
+    slider.style.display = "block";
+    fillingForm = true;
+  }
+}
+
+function changeColor(){
+  var colorButton = document.getElementById("color");
+}
+
+function displayShareForm(){
+  if(!fillingForm){
+    share_form = document.getElementById("share_form")
+    share_form.style.display = "block";
+    share_form.elements.invite_url.value = "http://localhost:5000/canvas?roomid=" + roomId
+    fillingForm = true;
+  }
+}
+
+function submitShareForm(e){
+  e.preventDefault();
+  form = document.getElementById("share_form")
+  url = document.getElementById("invite_url")
+  url.select();
+  document.execCommand("copy");
+  form.style.display = "none";
+  console.log(roomid)
+  fillingForm = false;
 }
 
 document.addEventListener("DOMContentLoaded", (event) => { // make sure the website is fully downloaded
 
+  var share_icon = document.getElementById("share_icon")
+  var share_form = document.getElementById("share_form")
   var text_form = document.getElementById("text_form");
   var text_icon = document.getElementById("text_icon");
+  var pen_icon = document.getElementById("pen_icon"); 
+  var slider = document.getElementById("slider");
+  var colorButton = document.getElementById("color");
+
+  colorButton.onChange = changeColor();
+
+  share_icon.onclick = displayShareForm;
+  share_form.style.display = "none";
+  share_form.onsubmit = submitShareForm
+
+  slider.addEventListener("submit", sliderSubmission, false);
+  slider.style.display = "none";
+  pen_icon.onclick = displayThicknessSlider;
   text_form.addEventListener("submit", textSubmission, false);
   text_form.style.display = "none";
   text_icon.onclick = displayTextSubmission
@@ -131,7 +196,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // make sure the webs
   colorHTML.oninput = function () {
     user_color = colorHTML.value;
   }
-
   // Slider for Pen Size
   var rangeslider = document.getElementById("penSlider");
   rangeslider.oninput = function () {

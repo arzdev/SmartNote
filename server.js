@@ -131,6 +131,7 @@ function newConnection(socket) {
   socket.roomid = roomid;
   room_manager.add_user(socket.roomid, socket.id);
   host_id = room_manager.get_host_socket(roomid)
+  socket.emit('room', roomid)
 
   if (host_id !== socket.id) {
     updateCanvas(host_id, socket.id, roomid)
@@ -144,6 +145,11 @@ function newConnection(socket) {
     console.log('diconnect detected: ' + socket.id)
     room_manager.remove_user(socket.id);
   });
+
+  socket.on('roomrequest', function() {
+    console.log('req recieved')
+    socket.emit('room', roomid)
+  })
 };
 
 function updateCanvas(host_id, user_socket, roomid){
