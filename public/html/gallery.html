@@ -8,13 +8,18 @@
 <head>
 	<script>
 	var xhttp = new XMLHttpRequest();
+<<<<<<< HEAD
 	 xhttp.onreadystatechange = function() 
+=======
+	 xhttp.onreadystatechange = function()
+>>>>>>> 33179e324d59430e672d127b955fb5955b4088d3
     {
       if (this.readyState == 4 && this.status == 200) {
         //var responseText_JSON = JSON.stringify(this.responseText)
 		//console.log(this.responseText)
 		var responseText_JSON = JSON.parse(this.responseText)
 		//console.log(responseText_JSON)
+<<<<<<< HEAD
 
 		for (var key in responseText_JSON) {
     		if (responseText_JSON.hasOwnProperty(key)) {
@@ -23,16 +28,45 @@
 				var imageDiv = document.createElement("img");
 				imageDiv.src = String(responseText_JSON[key])
 				imageDiv.setAttribute('class', 'feature_image');
+=======
+    var listOfKeys=[];
+		for (var key in responseText_JSON) {
+    		if (responseText_JSON.hasOwnProperty(key)) {
+        		console.log(key + " -> " + responseText_JSON[key]);
+				var imageDiv = document.createElement("img");
+				imageDiv.src = String(responseText_JSON[key])
+				imageDiv.setAttribute('class', 'feature_image', String(key));
+        console.log(String(key));
+>>>>>>> 33179e324d59430e672d127b955fb5955b4088d3
 
 				var newDiv = document.createElement("div");
 				var aDiv = document.createElement("a");
 				aDiv.setAttribute('href', 'http://www.google.com');
 
 				newDiv.class = "item"
+<<<<<<< HEAD
 				newDiv.appendChild(aDiv).appendChild(imageDiv)
 
 				document.getElementById("wrapper").appendChild(newDiv);
     		}
+=======
+				newDiv.appendChild(aDiv).appendChild(imageDiv);
+        listOfKeys.push(String(key));
+        //test
+        var button = document.createElement("button");
+        button.innerHTML = "Delete Canvas";
+        button.setAttribute("id", String(key))
+        newDiv.appendChild(button); //this adds button to each but doesn't have right key
+        console.log("\n\nbutton key: "+ String(key));
+        /*button.addEventListener ("click", function() {
+          alert("key: " + button.id);
+        });*/ //instead do onlick event
+        button.setAttribute("onclick", "functionName(this.id)")
+				document.getElementById("wrapper").appendChild(newDiv);
+    		}
+
+
+>>>>>>> 33179e324d59430e672d127b955fb5955b4088d3
 		}
      }
     };
@@ -40,6 +74,15 @@
 	xhttp.open("GET", "get_images", true);
   	xhttp.send();
 	</script>
+<<<<<<< HEAD
+=======
+
+  <script>
+  function functionName(id){
+    alert("key: " + id);
+  }
+  </script>
+>>>>>>> 33179e324d59430e672d127b955fb5955b4088d3
 </head>
 
 <body>
