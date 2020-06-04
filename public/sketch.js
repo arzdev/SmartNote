@@ -44,6 +44,12 @@ function getRoomId(data) {
 	console.log(roomId);
 }
 
+function getRoomId(data) {
+	roomId = data;
+	console.log("got it!");
+	console.log(roomId);
+}
+
 function newDrawing(data) {
 	console.log("new called!");
 	console.log(data);
@@ -87,24 +93,12 @@ function draw() {
 	}
 }
 
-function makeLine() {
-	if (!placingText) {
-		stroke(user_color);
-		strokeWeight(pen_size);
-		line(mouseX, mouseY, pmouseX, pmouseY);
-
-		var data = {
-			type: "line",
-			x: mouseX,
-			y: mouseY,
-			xp: pmouseX,
-			xy: pmouseY,
-			pensize: pen_size,
-			color: user_color,
-		};
-		socket.emit("mouse", data);
-		drawing.push(data);
-	}
+function sliderSubmission(e) {
+	e.preventDefault();
+	fillingForm = false;
+	thickness = e.target.elements.penSlider.value;
+	strokeWeight(thickness);
+	document.getElementById("slider").style.display = "none";
 }
 
 function textSubmission(e) {
@@ -155,14 +149,6 @@ function displayShareForm() {
 			"http://localhost:5000/canvas?roomid=" + roomId;
 		fillingForm = true;
 	}
-}
-
-function downloadAsPng() {
-	saveCanvas("myCanvas", "png");
-}
-
-function downloadAsPdf() {
-	saveCanvas("myCanvas", "pdf");
 }
 
 function submitShareForm(e) {
