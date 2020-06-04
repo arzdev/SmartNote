@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 	slider.addEventListener("submit", sliderSubmission, false);
 	slider.style.display = "none";
-	pen_icon.onclick = displayThicknessSlider;
+
 	text_form.addEventListener("submit", textSubmission, false);
 	text_form.style.display = "none";
 	text_icon.onclick = displayTextSubmission;
@@ -214,6 +214,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var colorHTML = document.getElementById("color");
 	colorHTML.oninput = function () {
 		user_color = colorHTML.value;
+	};
+
+	// pen icon
+	pen_icon.onclick = function () {
+		user_color = colorHTML.value;
+		displayThicknessSlider;
 	};
 
 	// Slider for Pen Size
