@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	downloadPdfButton.onclick = downloadAsPdf;
 
 	slider.addEventListener("submit", sliderSubmission, false);
-	slider.style.display = "none";
+	//	slider.style.display = "none";
 
 	text_form.addEventListener("submit", textSubmission, false);
 	text_form.style.display = "none";
