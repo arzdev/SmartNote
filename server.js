@@ -34,7 +34,7 @@ var googlePic = "";
 var googleName = "";
 var imgDatabase = "";
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 5000;
 var server = app.listen(PORT, () =>
 	console.log("Server is running on PORT: ", PORT)
 );
@@ -132,11 +132,11 @@ console.log(server);
 io.sockets.on("connection", newConnection);
 
 function newConnection(socket) {
-<<<<<<< HEAD
 	socket.join(roomid);
 	socket.roomid = roomid;
 	room_manager.add_user(socket.roomid, socket.id);
 	host_id = room_manager.get_host_socket(roomid);
+	socket.emit("room", roomid);
 
 	if (host_id !== socket.id) {
 		updateCanvas(host_id, socket.id, roomid);
@@ -150,33 +150,12 @@ function newConnection(socket) {
 		console.log("diconnect detected: " + socket.id);
 		room_manager.remove_user(socket.id);
 	});
+
+	socket.on("roomrequest", function () {
+		console.log("req recieved");
+		socket.emit("room", roomid);
+	});
 }
-=======
-  socket.join(roomid);
-  socket.roomid = roomid;
-  room_manager.add_user(socket.roomid, socket.id);
-  host_id = room_manager.get_host_socket(roomid)
-  socket.emit('room', roomid)
-
-  if (host_id !== socket.id) {
-    updateCanvas(host_id, socket.id, roomid)
-  }
-  socket.on('mouse', function (data) {
-    socket.to(socket.roomid).emit('mouse', data)
-    room_manager.push_stroke(roomid, data)
-  });
-
-  socket.on('disconnect', function() {
-    console.log('diconnect detected: ' + socket.id)
-    room_manager.remove_user(socket.id);
-  });
-
-  socket.on('roomrequest', function() {
-    console.log('req recieved')
-    socket.emit('room', roomid)
-  })
-};
->>>>>>> 1ee9e9de06a01fe99eec74fa9ea7a4062f825344
 
 function updateCanvas(host_id, user_socket, roomid) {
 	host_socket = io.sockets.connected[host_id];
