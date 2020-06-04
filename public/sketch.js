@@ -187,6 +187,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var colorButton = document.getElementById("color");
 	var downloadPngButton = document.getElementById("download_png");
 	var downloadPdfButton = document.getElementById("download_pdf");
+	var eraser = document.getElementById("eraser");
 
 	colorButton.onChange = changeColor();
 
@@ -204,11 +205,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	text_form.style.display = "none";
 	text_icon.onclick = displayTextSubmission;
 
+	// eraser
+	eraser.onclick = function () {
+		user_color = 0xffffff;
+	};
+
 	// Change color
 	var colorHTML = document.getElementById("color");
 	colorHTML.oninput = function () {
 		user_color = colorHTML.value;
 	};
+
 	// Slider for Pen Size
 	var rangeslider = document.getElementById("penSlider");
 	rangeslider.oninput = function () {

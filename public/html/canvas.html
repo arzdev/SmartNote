@@ -84,6 +84,7 @@
 				style="width: 60px; height: 60px;"
 			/>
 			<img
+				id="eraser"
 				src="https://img.icons8.com/color/96/000000/pencil-eraser.png"
 				style="width: 60px; height: 60px;"
 			/>
@@ -127,14 +128,12 @@
 		</form>
 
 		<script>
-			    function saveButton()
-			    {
-			      var canvasImage_JSON = document.getElementById("defaultCanvas0");
-			      var canvasImage_JSON_2 = canvasImage_JSON.toDataURL();
-			      // console.log(canvasImage_JSON_2)
-			      //var elem = document.getElementById("canvasImage");
-			      //elem.value = canvasImage_JSON_2;
-			    }
+			function saveButton() {
+				var canvasImage_JSON = document.getElementById("defaultCanvas0");
+				var canvasImage_JSON_2 = canvasImage_JSON.toDataURL();
+				// console.log(canvasImage_JSON_2)
+				//var elem = document.getElementById("canvasImage");
+				//elem.value = canvasImage_JSON_2;
 			}
 		</script>
 	</body>
