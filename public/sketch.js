@@ -135,6 +135,7 @@ function sliderSubmission(e) {
 }
 
 function displayThicknessSlider() {
+	user_color = colorHTML.value;
 	if (!fillingForm) {
 		slider = document.getElementById("slider");
 		slider.style.display = "block";
@@ -199,11 +200,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	downloadPdfButton.onclick = downloadAsPdf;
 
 	slider.addEventListener("submit", sliderSubmission, false);
-	//	slider.style.display = "none";
+	slider.style.display = "none";
 
 	text_form.addEventListener("submit", textSubmission, false);
 	text_form.style.display = "none";
 	text_icon.onclick = displayTextSubmission;
+
+	pen_icon.onclick = displayThicknessSlider;
 
 	// eraser
 	eraser.onclick = function () {
@@ -214,12 +217,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var colorHTML = document.getElementById("color");
 	colorHTML.oninput = function () {
 		user_color = colorHTML.value;
-	};
-
-	// pen icon
-	pen_icon.onclick = function () {
-		user_color = colorHTML.value;
-		displayThicknessSlider;
 	};
 
 	// Slider for Pen Size
