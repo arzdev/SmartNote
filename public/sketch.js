@@ -135,12 +135,13 @@ function displayTextSubmission() {
 }
 
 function displayThicknessSlider() {
-	user_color = colorHTML.value;
 	if (!fillingForm) {
 		slider = document.getElementById("slider");
 		slider.style.display = "block";
 		fillingForm = true;
 	}
+	curr_color = document.getElementById("color");
+	user_color = curr_color.value;
 }
 
 function changeColor() {
