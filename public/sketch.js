@@ -7,6 +7,8 @@ var placingText = false;
 var input_text = "";
 var font_size = 8;
 var roomId = "";
+var imgSrc = "";
+var loadBackground = false;
 
 function setup() {
 	// put setup code here
@@ -18,6 +20,7 @@ function setup() {
 
 	socket = io.connect("localhost:5000");
 	socket.on("room", getRoomId);
+	socket.on('background', getBackground);
 	socket.on("mouse", newDrawing);
 }
 
@@ -25,6 +28,13 @@ function getRoomId(data) {
 	roomId = data;
 	console.log("got it!");
 	console.log(roomId);
+}
+
+function getBackground(data){
+  console.log('got background!')
+  imgsrc = data
+  console.log(data)
+  loadBackground = true;
 }
 
 function newDrawing(data) {
@@ -68,7 +78,22 @@ function draw() {
 			makeLine();
 		}
 	}
+	if(loadBackground){
+      console.log('got to loadback')
+      var testimg; 
+      var raw = new Image();
+      raw.src = imgsrc;
+
+
+      raw.onload = function() {
+        testimg = createImage(raw.width, raw.height);
+        testimg.drawingContext.drawImage(raw, 0, 0);
+        background(testimg, 0, 0); // draw the image, etc here
+      }
+      loadBackground = false;
+    }
 }
+
 
 function makeLine() {
 	if (!placingText) {
