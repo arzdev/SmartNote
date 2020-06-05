@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <header>
+      <title>features</title>
+      <link rel="stylesheet" type="text/css" href="../css/pricing.css">
+    </header>
+
+    <body>
+      <form class="topnav", method="get">
+        <button  type='submit' formaction="/signup"> signup </button>
+        <button  type='submit' formaction="/pricing"> pricing </button>
+        <button  type='submit' formaction="/about"> about </button>
+        <button  type='submit' formaction="/features"> features </button>
+        <button  type='submit' formaction="/"> home </button>
+      </form>
+
+      <section id='pricing_header'>
+          SmartNote Pricing
+      </section>
+
+      <section id='pricing'>
+
+        <div id="prices">
+        
+          <section id = 'student'>
+            <img onclick="myfunction(this.id)" id="student_pic" src="https://img.icons8.com/android/96/000000/student-male.png"> <br>
+
+            <div id='student_text'>
+            </div> 
+
+          </section>
+          
+          <section id = 'org'>
+            <img onclick="myfunction(this.id) "id="org_pic" src="https://img.icons8.com/ios-filled/100/000000/student-center.png"> <br>
+
+            <div id='org_text'>
+            </div> 
+
+          </section>
+
+          <section id = 'person'>
+            <img onclick="myfunction(this.id)" id="person_pic" src="https://img.icons8.com/ios-glyphs/100/000000/person-male.png"> <br>
+
+            <div id='person_text'>
+            </div> 
+
+          </section>
+
+        </div>
+        
+      </section>
+
+      <script type="text/javascript">
+        function myfunction(id){
+          console.log(id);
+          if(id == 'student_pic'){
+            text = document.getElementById("student_text");
+            text.innerHTML = "<b> Student Pricing </b> <br> Students are offered a special discounted subscription of $3 a month"
+            console.log('here');
+          }
+          if(id == 'org_pic'){
+            document.getElementById("org_text").innerHTML = "<b> Organization Pricing </b>  <br> Organizations are charged based on size: <br> \<100 members- $2/person/month <br> \<500 members- $2.50/person/month <br> \>500 members- $2/person/month"
+            console.log('here');
+          }
+          if(id == 'person_pic'){
+            console.log('here');
+            document.getElementById("person_text").innerHTML = "<b> Individual Pricing </b> <br> Individuals are eligible for a $5 monthly subscription."
+          }
+        }
+
+      </script>
+
+
+
+    </body>
+</html>

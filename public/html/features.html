@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <header>
+      <title>features</title>
+      <link rel="stylesheet" type="text/css" href="../css/features.css">
+    </header>
+
+    <body>
+      <form class="topnav", method="get">
+        <button  type='submit' formaction="/signup"> signup </button>
+        <button  type='submit' formaction="/pricing"> pricing </button>
+        <button  type='submit' formaction="/about"> about </button>
+        <button  type='submit' formaction="/features"> features </button>
+        <button  type='submit' formaction="/"> home </button>
+      </form>
+
+      <section id='features_header'>
+          SmartNote's Features 
+      </section>
+
+      <section id='features'>
+
+        <div id="team_members">
+        
+          <section id = 'whiteboard'>
+            <img onclick="myfunction(this.id)" id="whiteboard_pic" src="../img/whiteboard_pic.png"> <br>
+
+            <div id='whiteboard_text'>
+            </div> 
+
+          </section>
+          
+          <section id = 'google'>
+            <img onclick="myfunction(this.id) "id="google_pic" src="../img/google_pic.png"> <br>
+
+            <div id='google_text'>
+            </div> 
+
+          </section>
+
+          <section id = 'colab'>
+            <img onclick="myfunction(this.id)" id="colab_pic" src="../img/colab_pic.png"> <br>
+
+            <div id='colab_text'>
+            </div> 
+
+          </section>
+
+        </div>
+        
+      </section>
+
+      <script type="text/javascript">
+        function myfunction(id){
+          if(id == 'google_pic'){
+            text = document.getElementById("google_text");
+            text.innerHTML = "Smarnote seemlessly integrrates with your google drive, so all you work is safely and reliably stored";
+          }
+          else if(id == 'whiteboard_pic'){
+            document.getElementById("whiteboard_text").innerHTML = "Smartnote Provides users with a virtual whiteboard students can use to take notes, work on homework, and sketch ideas.";
+          }
+          if(id == 'colab_pic'){
+            console.log('here');
+            document.getElementById("colab_text").innerHTML = "Our virtual whiteboards support real time collaberation, so you can easily develop your work with friends"
+          }
+        }
+
+      </script>
+
+
+
+    </body>
+</html>
+

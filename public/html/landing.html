@@ -63,6 +63,8 @@
 
       var gallery = document.getElementById("gallery");
       var try_it = document.getElementById("try_it");
+      document.getElementById("signout").style.display = "block";
+      document.getElementById("my-signin2").style.display = "none";
 
       try_it.style.display = "none";
       gallery.style.display = "block";
@@ -93,16 +95,18 @@
     </script>
     
     <center>
-    <a href="#" onclick="signOut();">Sign out</a>
+    <a id="signout" style="display:none;" href="#" onclick="signOut();">Sign out</a>
     </center>
     <script>
       function signOut() {
+      document.getElementById("my-signin2").style.display = "block";
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');
 
         var gallery = document.getElementById("gallery");
         var try_it = document.getElementById("try_it");
+        document.getElementById("signout").style.display = "none";
       
         try_it.style.display = "block";
         gallery.style.display = "none";

@@ -8,14 +8,22 @@
    </header>
 
    <body>
+  
+      <form class="topnav" method="get">
+        <button  type='submit' formaction="/about"> about </button>
+        <button  type='submit' formaction="/features"> features </button>
+        <button  type='submit' formaction="/pricing"> pricing </button>
+        <button  type='submit' formaction="/signup"> signup </button>
+        <button  type='submit' formaction="/"> home </button>
+      </form>
+
       <div id='signupbox>'
         <div class="container" id="container">
            <div class="form-container sign-up-container">
-              <form name='signup' method='POST' action='/signup'>
+              <form class="signup-form" name='signup' method='POST' action='/signup'>
                  <h1>Signup</h1>
-                 <input type="text" placeholder="fistname" name="firstname" required/>
-                 <input type="text" placeholder="lastname" name="lastname" required/>
-                 <input type="text" placeholder="email adress" name="email" required/>
+                 <input type="text" placeholder="email" name="email" required/>
+                 <input type="password" placeholder="password" name="password" required/>
                  <button type='submit' name="submit_button" value="login"> SIGN UP! </button>
               </form>
            </div>
@@ -24,3 +32,4 @@
    </body>
 
 </html>
+
