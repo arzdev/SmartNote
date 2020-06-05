@@ -94,6 +94,7 @@ input {
 }
 
 .signup-container {
+  text-align: center;
 	left: 1;
 	width: 50vw;
 	z-index: 2;
