@@ -67,6 +67,14 @@ app.get("/signup", (req, res) => {
 	res.render("signup.html");
 });
 
+app.get("/pricing", (req, res) => {
+	res.render("pricing.html");
+});
+
+app.get("/features", (req, res) => {
+	res.render("features.html");
+});
+
 app.get("/gallery", (req, res) => {
 	var url = req.query.id;
 	console.log(url); // prints value
