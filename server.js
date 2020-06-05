@@ -137,8 +137,6 @@ function newConnection(socket) {
 	host_id = room_manager.get_host_socket(roomid);
 	socket.emit("room", roomid);
 
-	socket.emit("background", imgsrc);
-
 	if (host_id !== socket.id) {
 		updateCanvas(host_id, socket.id, roomid);
 	}

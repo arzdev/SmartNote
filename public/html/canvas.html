@@ -23,7 +23,7 @@
 	</head>
 
 	<body>
-    <div id="text_prompt">
+    <div id="text_prompt" style="display:none;">
 			<form id="text_form">
 				<label for="font_size">font size:</label>
 				<select id="font_size" name="font_size">
@@ -38,7 +38,7 @@
 
 				<label for="words">text:</label>
 				<input type="text" id="words" name="lname" /><br />
-				<input type="submit" value="Submit" />
+				<input class="submit_button" type="submit" value="Submit" />
 			</form>
     </div>
 
@@ -54,66 +54,59 @@
 					type="range"
 					min="1"
 					max="100"
-					value="23"
+					value="20"
 					class="slider"
 					id="penSlider"
 				/>
 				<b>thicc </b><br />
-				<input id="sliderSubmit" type="submit" value="Submit" />
+				<input id="sliderSubmit" class="submit_button" type="submit" value="Submit" />
 			</div>
 		</form>
 
 		<form id="share_form">
 			Copy the link and send it to your friends!<br />
 			<input id="invite_url" type="text" value="Hello World" id="url" />
-			<input id="invite_copy" type="submit" value="Copy to Clipboard" />
-		</form>
-
-		<form id="download_png">
-			Download as a png!<br />
-			<input id="downloadpng" type="button" value="downloadpng" />
-		</form>
-
-		<form id="download_Jpeg">
-			Download as a jpeg!<br />
-			<input id="downloadjpg" type="button" value="downloadjpg" />
+			<input id="invite_copy" class="submit_button" type="submit" value="Copy to Clipboard" />
 		</form>
 		<div id="top_bar">
 			<input type="color" value="#000000" id="color" />
 			<img
 				id="pen_icon"
-				src="https://img.icons8.com/cotton/64/000000/pen.png"
+				src="https://img.icons8.com/cotton/60/000000/pen.png"
 				style="width: 60px; height: 60px;"
 			/>
 			<img
 				id="eraser"
-				src="https://img.icons8.com/color/96/000000/pencil-eraser.png"
+				src="https://img.icons8.com/color/60/000000/pencil-eraser.png"
 				style="width: 60px; height: 60px;"
 			/>
+      <img 
+        id="thickness_icon" 
+        src="https://img.icons8.com/office/60/000000/line-width.png"
+				style="width: 60px; height: 60px;"
+      />
 			<img
 				id="text_icon"
-				src="https://img.icons8.com/ios/100/000000/text.png"
+				src="https://img.icons8.com/ios/60/000000/text.png"
 				style="width: 60px; height: 60px;"
 			/>
 			<img
-				src="https://img.icons8.com/color/96/000000/save-all.png"
+        id="save_icon"
+				src="https://img.icons8.com/color/60/000000/save-all.png"
 				style="width: 60px; height: 60px;"
 			/>
 			<img
 				id="share_icon"
-				src="https://img.icons8.com/android/24/000000/share.png"
+				src="https://img.icons8.com/android/55/000000/share.png"
 				style="width: 55px; height: 55px;"
 			/>
-			<p contenteditable="true" id="name_label">WhiteBoard Name</p>
+			<p contenteditable="true" id="whiteboard_name">WhiteBoard Name</p>
 		</div>
 
 		<script>
 			function saveButton() {
 				var canvasImage_JSON = document.getElementById("defaultCanvas0");
 				var canvasImage_JSON_2 = canvasImage_JSON.toDataURL();
-				// console.log(canvasImage_JSON_2)
-				//var elem = document.getElementById("canvasImage");
-				//elem.value = canvasImage_JSON_2;
 			}
 		</script>
 	</body>

@@ -12,7 +12,9 @@ var erasing = false;
 
 function setup() {
 	// put setup code here
-	createCanvas(windowWidth, windowHeight);
+  var dy = document.getElementById("top_bar").offsetHeight;
+	var cnv = createCanvas(windowWidth, windowHeight - dy);
+  cnv.position(0,dy)
 	background(255);
 
 	user_color = "#000000";
@@ -101,7 +103,7 @@ function draw() {
 }
 
 function makeLine() {
-	if (!placingText) {
+	if (!placingText && mouseX > 0 && mouseY > 0) {
 		stroke(user_color);
 		strokeWeight(pen_size);
 		line(mouseX, mouseY, pmouseX, pmouseY);
@@ -135,12 +137,14 @@ function textSubmission(e) {
 	input_text = e.target.elements.words.value;
 	font_size = parseInt(e.target.elements.font_size.value);
 	document.getElementById("text_form").style.display = "none";
+	document.getElementById("text_prompt").style.display = "none";
 }
 
 function displayTextSubmission() {
 	if (!fillingForm) {
 		fillingForm = true;
 		document.getElementById("text_form").style.display = "block";
+		document.getElementById("text_prompt").style.display = "block";
 		console.log("before:");
 		console.log(pen_size);
 		strokeWeight(1);
@@ -155,7 +159,14 @@ function displayThicknessSlider() {
 	}
 	curr_color = document.getElementById("color");
 	user_color = curr_color.value;
+}
+
+function setPen(){
   erasing = false;
+}
+
+function setErase(){
+  erasing = true;
 }
 
 function changeColor() {
@@ -164,20 +175,40 @@ function changeColor() {
 
 function displayShareForm() {
 	if (!fillingForm) {
+		fillingForm = true;
 		share_form = document.getElementById("share_form");
 		share_form.style.display = "block";
 		share_form.elements.invite_url.value =
 			"http://localhost:5000/canvas?roomid=" + roomId;
-		fillingForm = true;
 	}
 }
 
 function downloadAsPng() {
-	saveCanvas("myCanvas", "png");
+  console.log('here!')
+  filename = document.getElementById("whiteboard_name").textContent;
+  if(filename === ""){
+    filename = "Whiteboard Name";
+  }
+	saveCanvas(filename, "png");
 }
 
 function downloadAsJpeg() {
 	saveCanvas("myCanvas", "jpeg");
+}
+
+function editWhiteboardName(e) {
+  var whiteboard_name = document.getElementById("whiteboard_name")
+  if(e.code === "Enter"){
+    e.preventDefault();
+    whiteboard_name.blur();
+  }
+}
+
+function whiteboardNameBlur(e) {
+  var whiteboard_name = document.getElementById("whiteboard_name")
+  if(whiteboard_name.textContent === ""){
+    whiteboard_name.textContent = "Whiteboard Name";
+  }
 }
 
 function submitShareForm(e) {
@@ -195,24 +226,26 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	// make sure the website is fully downloaded
 
 	var share_icon = document.getElementById("share_icon");
+  var save_icon = document.getElementById("save_icon"); 
 	var share_form = document.getElementById("share_form");
 	var text_form = document.getElementById("text_form");
 	var text_icon = document.getElementById("text_icon");
+  var thickness_icon = document.getElementById("thickness_icon");
 	var pen_icon = document.getElementById("pen_icon");
 	var slider = document.getElementById("slider");
 	var colorButton = document.getElementById("color");
-	var downloadPngButton = document.getElementById("download_png");
-	var downloadJpegButton = document.getElementById("download_Jpeg");
 	var eraser = document.getElementById("eraser");
+  var whiteboard_name = document.getElementById("whiteboard_name")
+  var top_bar = document.getElementById("top_bar");
+
 
 	colorButton.onChange = changeColor();
+  whiteboard_name.onkeydown = editWhiteboardName;
+  whiteboard_name.onblur = whiteboardNameBlur;
 
 	share_icon.onclick = displayShareForm;
 	share_form.style.display = "none";
 	share_form.onsubmit = submitShareForm;
-
-	downloadPngButton.onclick = downloadAsPng;
-	downloadJpegButton.onclick = downloadAsJpeg;
 
 	slider.addEventListener("submit", sliderSubmission, false);
 	slider.style.display = "none";
@@ -221,13 +254,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	text_form.style.display = "none";
 	text_icon.onclick = displayTextSubmission;
 
-	pen_icon.onclick = displayThicknessSlider;
+	pen_icon.onclick = setPen;
+  thickness_icon.onclick = displayThicknessSlider;
 
 	// eraser
-	eraser.onclick = function () {
-		//user_color = 0xffffff;
-    erasing = true;
-	};
+	eraser.onclick = setErase;
+  save_icon.onclick = downloadAsPng;
 
 	// Change color
 	var colorHTML = document.getElementById("color");
