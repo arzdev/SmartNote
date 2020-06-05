@@ -230,6 +230,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var share_form = document.getElementById("share_form");
 	var text_form = document.getElementById("text_form");
 	var text_icon = document.getElementById("text_icon");
+  var download_icon = document.getElementById("download_icon")
   var thickness_icon = document.getElementById("thickness_icon");
 	var pen_icon = document.getElementById("pen_icon");
 	var slider = document.getElementById("slider");
@@ -259,7 +260,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 	// eraser
 	eraser.onclick = setErase;
-  save_icon.onclick = downloadAsPng;
+  download_icon.onclick = downloadAsPng;
 
 	// Change color
 	var colorHTML = document.getElementById("color");
