@@ -1,4 +1,3 @@
-var socket;
 var user_color;
 var pen_size;
 var drawing = [];
@@ -9,6 +8,7 @@ var font_size = 8;
 var roomId = "";
 var imgSrc = "";
 var loadBackground = false;
+var erasing = false;
 
 function setup() {
 	// put setup code here
@@ -54,6 +54,12 @@ function newDrawing(data) {
 }
 
 function draw() {
+  if(erasing){
+    erase()
+  }
+  else{
+    noErase()//test with background img
+  }
 	if (mouseIsPressed) {
 		if (placingText) {
 			console.log(pen_size);
@@ -79,6 +85,7 @@ function draw() {
 		}
 	}
 	if(loadBackground){
+      loadBackground = false;
       console.log('got to loadback')
       var testimg; 
       var raw = new Image();
@@ -90,10 +97,8 @@ function draw() {
         testimg.drawingContext.drawImage(raw, 0, 0);
         background(testimg, 0, 0); // draw the image, etc here
       }
-      loadBackground = false;
     }
 }
-
 
 function makeLine() {
 	if (!placingText) {
@@ -150,6 +155,7 @@ function displayThicknessSlider() {
 	}
 	curr_color = document.getElementById("color");
 	user_color = curr_color.value;
+  erasing = false;
 }
 
 function changeColor() {
@@ -219,7 +225,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 	// eraser
 	eraser.onclick = function () {
-		user_color = 0xffffff;
+		//user_color = 0xffffff;
+    erasing = true;
 	};
 
 	// Change color

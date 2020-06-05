@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="../css/canvas.css" />
+    <link rel="icon" href="../img/ashley.png">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>SmartNote Canvas</title>
@@ -22,7 +23,7 @@
 	</head>
 
 	<body>
-		<div id="text_prompt">
+    <div id="text_prompt">
 			<form id="text_form">
 				<label for="font_size">font size:</label>
 				<select id="font_size" name="font_size">
@@ -30,14 +31,16 @@
 					<option value="12">12</option>
 					<option value="16">16</option>
 					<option value="24">24</option>
-					<option value="32">32</option> </select
-				><br />
+					<option value="32">32</option> 
+					<option value="64">64</option> 
+					<option value="128">128</option> 
+        </select><br />
 
 				<label for="words">text:</label>
 				<input type="text" id="words" name="lname" /><br />
 				<input type="submit" value="Submit" />
 			</form>
-		</div>
+    </div>
 
 		<form id="slider">
 			<div
@@ -75,7 +78,6 @@
 			Download as a jpeg!<br />
 			<input id="downloadjpg" type="button" value="downloadjpg" />
 		</form>
-
 		<div id="top_bar">
 			<input type="color" value="#000000" id="color" />
 			<img
@@ -94,14 +96,6 @@
 				style="width: 60px; height: 60px;"
 			/>
 			<img
-				src="https://img.icons8.com/color/96/000000/paint-bucket.png"
-				style="width: 60px; height: 60px;"
-			/>
-			<img
-				src="https://img.icons8.com/officel/80/000000/group-objects.png"
-				style="width: 60px; height: 60px;"
-			/>
-			<img
 				src="https://img.icons8.com/color/96/000000/save-all.png"
 				style="width: 60px; height: 60px;"
 			/>
@@ -112,20 +106,6 @@
 			/>
 			<p contenteditable="true" id="name_label">WhiteBoard Name</p>
 		</div>
-
-		<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-
-		<form method="post" target="dummyframe">
-			<div>
-				<input name="id" id="canvasID" value="345" style="display: none;" />
-			</div>
-
-			<button type="submit" id="save" formaction="/save">save</button>
-
-			<button type="submit" id="download" formaction="/download">
-				Download</button
-			><!--ashley added-->
-		</form>
 
 		<script>
 			function saveButton() {
