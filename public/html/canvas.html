@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="../css/canvas.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SmartNote Canvas</title>
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+			}
+		</style>
+		<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+		<script src="../p5.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+		<script src="sketch.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<link rel="stylesheet" href="../css/canvas.css" />
+	</head>
+
+	<body>
+		<div id="text_prompt">
+			<form id="text_form">
+				<label for="font_size">font size:</label>
+				<select id="font_size" name="font_size">
+					<option value="8">8</option>
+					<option value="12">12</option>
+					<option value="16">16</option>
+					<option value="24">24</option>
+					<option value="32">32</option> </select
+				><br />
+
+				<label for="words">text:</label>
+				<input type="text" id="words" name="lname" /><br />
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
+
+		<form id="slider">
+			<div
+				id="thickness_slider"
+				class="slide_section"
+				style="display: inline-block;"
+			>
+				<div id="sliderTitle">Select a Thickness!</div>
+				<b> smol </b
+				><input
+					type="range"
+					min="1"
+					max="100"
+					value="23"
+					class="slider"
+					id="penSlider"
+				/>
+				<b>thicc </b><br />
+				<input id="sliderSubmit" type="submit" value="Submit" />
+			</div>
+		</form>
+
+		<form id="share_form">
+			Copy the link and send it to your friends!<br />
+			<input id="invite_url" type="text" value="Hello World" id="url" />
+			<input id="invite_copy" type="submit" value="Copy to Clipboard" />
+		</form>
+
+		<form id="download_png">
+			Download as a png!<br />
+			<input id="downloadpng" type="button" value="downloadpng" />
+		</form>
+
+		<form id="download_Jpeg">
+			Download as a jpeg!<br />
+			<input id="downloadjpg" type="button" value="downloadjpg" />
+		</form>
+
+		<div id="top_bar">
+			<input type="color" value="#000000" id="color" />
+			<img
+				id="pen_icon"
+				src="https://img.icons8.com/cotton/64/000000/pen.png"
+				style="width: 60px; height: 60px;"
+			/>
+			<img
+				id="eraser"
+				src="https://img.icons8.com/color/96/000000/pencil-eraser.png"
+				style="width: 60px; height: 60px;"
+			/>
+			<img
+				id="text_icon"
+				src="https://img.icons8.com/ios/100/000000/text.png"
+				style="width: 60px; height: 60px;"
+			/>
+			<img
+				src="https://img.icons8.com/color/96/000000/paint-bucket.png"
+				style="width: 60px; height: 60px;"
+			/>
+			<img
+				src="https://img.icons8.com/officel/80/000000/group-objects.png"
+				style="width: 60px; height: 60px;"
+			/>
+			<img
+				src="https://img.icons8.com/color/96/000000/save-all.png"
+				style="width: 60px; height: 60px;"
+			/>
+			<img
+				id="share_icon"
+				src="https://img.icons8.com/android/24/000000/share.png"
+				style="width: 55px; height: 55px;"
+			/>
+			<p contenteditable="true" id="name_label">WhiteBoard Name</p>
+		</div>
+
+		<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+		<form method="post" target="dummyframe">
+			<div>
+				<input name="id" id="canvasID" value="345" style="display: none;" />
+			</div>
+
+			<button type="submit" id="save" formaction="/save">save</button>
+
+			<button type="submit" id="download" formaction="/download">
+				Download</button
+			><!--ashley added-->
+		</form>
+
+		<script>
+			function saveButton() {
+				var canvasImage_JSON = document.getElementById("defaultCanvas0");
+				var canvasImage_JSON_2 = canvasImage_JSON.toDataURL();
+				// console.log(canvasImage_JSON_2)
+				//var elem = document.getElementById("canvasImage");
+				//elem.value = canvasImage_JSON_2;
+			}
+		</script>
+	</body>
+</html>
