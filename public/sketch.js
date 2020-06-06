@@ -32,7 +32,6 @@ function getRoomId(data) {
 	roomId = data;
 	console.log("got it!");
 	console.log(roomId);
-  postConnection()
 }
 
 function getBackground(data){
