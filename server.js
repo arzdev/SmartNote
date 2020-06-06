@@ -143,13 +143,15 @@ app.get("/gallery", (req, res) => {
 
 app.post("/myform", function (req, res) {
 	var myText = req.query.mytext; //mytext is the name of your input box
-	console.log(myText);
 });
 
-app.post("/save", function (req, res) {
-	var myText = req.query.id; //mytext is the name of your input box
-	console.log(myText);
-});
+app.post("/save", function (req,res) {
+  imgsrc = req.body["data"]
+  name = req.body["name"]
+
+  console.log(imgsrc)
+  console.log(req.session.prof_id)
+})
 
 app.get("/canvas", (req, res) => {
 	res.render("canvas.html");

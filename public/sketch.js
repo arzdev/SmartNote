@@ -230,8 +230,15 @@ function saveFile() {
   thumbs.push(img);
   img.save(frameCount, '.png');
   imgurl = img.canvas.toDataURL()
-  saveLoad = {"data": imgurl, "name": document.getElementById("whiteboard_name").textContent}
-  socket.emit('save', saveLoad)
+  name = document.getElementById("whiteboard_name").textContent
+
+
+  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+  var theUrl = "http://localhost:5000/save"
+  xmlhttp.open("POST", theUrl);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send(JSON.stringify({ "name": name, "data": imgurl}))
+  
 
 }
 
