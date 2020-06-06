@@ -113,7 +113,7 @@ app.get('/auth/google/callback',
 );
 
 app.get("/gallery", (req, res) => {
-	var url = req.query.id;
+  url = req.session.prof_id
 	console.log(url); // prints value
 
 	// Detect if GoogleID is in Firebase
