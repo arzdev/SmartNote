@@ -32,6 +32,7 @@ function getRoomId(data) {
 	roomId = data;
 	console.log("got it!");
 	console.log(roomId);
+  postConnection()
 }
 
 function getBackground(data){
@@ -220,7 +221,6 @@ function submitShareForm(e) {
 	url.select();
 	document.execCommand("copy");
 	form.style.display = "none";
-	console.log(roomid);
 	fillingForm = false;
 }
 
@@ -238,8 +238,6 @@ function saveFile() {
   xmlhttp.open("POST", theUrl);
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.send(JSON.stringify({ "name": name, "data": imgurl}))
-  
-
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -247,6 +245,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 	var share_icon = document.getElementById("share_icon");
   var save_icon = document.getElementById("save_icon"); 
+  var home_icon = document.getElementById("home_icon");
 	var share_form = document.getElementById("share_form");
 	var text_form = document.getElementById("text_form");
 	var text_icon = document.getElementById("text_icon");
@@ -260,6 +259,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   var top_bar = document.getElementById("top_bar");
 
   save_icon.onclick = saveFile;
+ // home_icon.onclick = saveFile;
 
 
 	colorButton.onChange = changeColor();
