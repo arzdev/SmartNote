@@ -47,7 +47,7 @@ var googlePic = "";
 var googleName = "";
 var imgDatabase = "";
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 var server = app.listen(PORT, () =>
 	console.log("Server is running on PORT: ", PORT)
 );
@@ -113,37 +113,37 @@ app.get('/auth/google/callback',
 );
 
 app.get("/gallery", (req, res) => {
-  url = req.session.prof_id
-  if (url === undefined){
-    res.redirect("/")
-  }
-  else{
 	url = req.session.prof_id
-	console.log(url); // prints value
-    // Detect if GoogleID is in Firebase
-    var accountRef = firebase.database().ref("users/");
+	if (url === undefined) {
+		res.redirect("/")
+	}
+	else {
+		url = req.session.prof_id
+		console.log(url); // prints value
+		// Detect if GoogleID is in Firebase
+		var accountRef = firebase.database().ref("users/");
 
-    accountRef.once('value', function (snapshot) {
-      if (snapshot.hasChild(url)) {
-      }
-      else {
-        console.log("Google Account doesn't exist in FireBase! Added!")
-        writeUserData(url)
-      }
-    });
+		accountRef.once('value', function (snapshot) {
+			if (snapshot.hasChild(url)) {
+			}
+			else {
+				console.log("Google Account doesn't exist in FireBase! Added!")
+				writeUserData(url)
+			}
+		});
 
-    var ref = firebase.database().ref("users/" + url + "/images");
+		var ref = firebase.database().ref("users/" + url + "/images");
 
-    ref.on('value', function (snapshot) {
-      imgDatabase = JSON.stringify(snapshot.val());
-    },
-      function (error) {
-        console.log("Error: " + error.code);
-      }
-    );
+		ref.on('value', function (snapshot) {
+			imgDatabase = JSON.stringify(snapshot.val());
+		},
+			function (error) {
+				console.log("Error: " + error.code);
+			}
+		);
 
-    res.render("gallery.html");
-  }
+		res.render("gallery.html");
+	}
 });
 
 app.post("/myform", function (req, res) {

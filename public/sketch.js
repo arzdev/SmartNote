@@ -14,15 +14,15 @@ var cnv;
 
 function setup() {
 	// put setup code here
-  dy = document.getElementById("top_bar").offsetHeight;
+	dy = document.getElementById("top_bar").offsetHeight;
 	cnv = createCanvas(windowWidth, windowHeight - dy);
-  cnv.position(0,dy)
+	cnv.position(0, dy)
 	background(255);
 
 	user_color = "#000000";
 	pen_size = 20;
 
-	socket = io.connect("localhost:5000");
+	socket = io.connect("http://smartnote.live");
 	socket.on("room", getRoomId);
 	socket.on('background', getBackground);
 	socket.on("mouse", newDrawing);
@@ -34,11 +34,11 @@ function getRoomId(data) {
 	console.log(roomId);
 }
 
-function getBackground(data){
-  console.log('got background!')
-  imgsrc = data
-  console.log(data)
-  loadBackground = true;
+function getBackground(data) {
+	console.log('got background!')
+	imgsrc = data
+	console.log(data)
+	loadBackground = true;
 }
 
 function newDrawing(data) {
@@ -58,12 +58,12 @@ function newDrawing(data) {
 }
 
 function draw() {
-  if(erasing){
-    erase()
-  }
-  else{
-    noErase()//test with background img
-  }
+	if (erasing) {
+		erase()
+	}
+	else {
+		noErase()//test with background img
+	}
 	if (mouseIsPressed) {
 		if (placingText) {
 			console.log(pen_size);
@@ -88,20 +88,20 @@ function draw() {
 			makeLine();
 		}
 	}
-	if(loadBackground){
-      loadBackground = false;
-      console.log('got to loadback')
-      var testimg; 
-      var raw = new Image();
-      raw.src = imgsrc;
+	if (loadBackground) {
+		loadBackground = false;
+		console.log('got to loadback')
+		var testimg;
+		var raw = new Image();
+		raw.src = imgsrc;
 
 
-      raw.onload = function() {
-        testimg = createImage(raw.width, raw.height);
-        testimg.drawingContext.drawImage(raw, 0, 0);
-        background(testimg, 0, 0); // draw the image, etc here
-      }
-    }
+		raw.onload = function () {
+			testimg = createImage(raw.width, raw.height);
+			testimg.drawingContext.drawImage(raw, 0, 0);
+			background(testimg, 0, 0); // draw the image, etc here
+		}
+	}
 }
 
 function makeLine() {
@@ -163,12 +163,12 @@ function displayThicknessSlider() {
 	user_color = curr_color.value;
 }
 
-function setPen(){
-  erasing = false;
+function setPen() {
+	erasing = false;
 }
 
-function setErase(){
-  erasing = true;
+function setErase() {
+	erasing = true;
 }
 
 function changeColor() {
@@ -181,16 +181,16 @@ function displayShareForm() {
 		share_form = document.getElementById("share_form");
 		share_form.style.display = "block";
 		share_form.elements.invite_url.value =
-			"http://localhost:5000/canvas?roomid=" + roomId;
+			"http://smartnote.live/canvas?roomid=" + roomId;
 	}
 }
 
 function downloadAsPng() {
-  console.log('here!')
-  filename = document.getElementById("whiteboard_name").textContent;
-  if(filename === ""){
-    filename = "Whiteboard Name";
-  }
+	console.log('here!')
+	filename = document.getElementById("whiteboard_name").textContent;
+	if (filename === "") {
+		filename = "Whiteboard Name";
+	}
 	saveCanvas(filename, "png");
 }
 
@@ -199,18 +199,18 @@ function downloadAsJpeg() {
 }
 
 function editWhiteboardName(e) {
-  var whiteboard_name = document.getElementById("whiteboard_name")
-  if(e.code === "Enter"){
-    e.preventDefault();
-    whiteboard_name.blur();
-  }
+	var whiteboard_name = document.getElementById("whiteboard_name")
+	if (e.code === "Enter") {
+		e.preventDefault();
+		whiteboard_name.blur();
+	}
 }
 
 function whiteboardNameBlur(e) {
-  var whiteboard_name = document.getElementById("whiteboard_name")
-  if(whiteboard_name.textContent === ""){
-    whiteboard_name.textContent = "Whiteboard Name";
-  }
+	var whiteboard_name = document.getElementById("whiteboard_name")
+	if (whiteboard_name.textContent === "") {
+		whiteboard_name.textContent = "Whiteboard Name";
+	}
 }
 
 function submitShareForm(e) {
@@ -224,46 +224,46 @@ function submitShareForm(e) {
 }
 
 function saveFile() {
-  const thumbs = [];
-  const img = get();
-  thumbs.push(img);
-  img.save(frameCount, '.png');
-  imgurl = img.canvas.toDataURL()
-  name = document.getElementById("whiteboard_name").textContent
+	const thumbs = [];
+	const img = get();
+	thumbs.push(img);
+	img.save(frameCount, '.png');
+	imgurl = img.canvas.toDataURL()
+	name = document.getElementById("whiteboard_name").textContent
 
 
-  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-  var theUrl = "http://localhost:5000/save"
-  xmlhttp.open("POST", theUrl);
-  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xmlhttp.send(JSON.stringify({ "name": name, "data": imgurl}))
+	var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+	var theUrl = "http://smartnote.live/save"
+	xmlhttp.open("POST", theUrl);
+	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xmlhttp.send(JSON.stringify({ "name": name, "data": imgurl }))
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
 	// make sure the website is fully downloaded
 
 	var share_icon = document.getElementById("share_icon");
-  var save_icon = document.getElementById("save_icon"); 
-  var home_icon = document.getElementById("home_icon");
+	var save_icon = document.getElementById("save_icon");
+	var home_icon = document.getElementById("home_icon");
 	var share_form = document.getElementById("share_form");
 	var text_form = document.getElementById("text_form");
 	var text_icon = document.getElementById("text_icon");
-  var download_icon = document.getElementById("download_icon")
-  var thickness_icon = document.getElementById("thickness_icon");
+	var download_icon = document.getElementById("download_icon")
+	var thickness_icon = document.getElementById("thickness_icon");
 	var pen_icon = document.getElementById("pen_icon");
 	var slider = document.getElementById("slider");
 	var colorButton = document.getElementById("color");
 	var eraser = document.getElementById("eraser");
-  var whiteboard_name = document.getElementById("whiteboard_name")
-  var top_bar = document.getElementById("top_bar");
+	var whiteboard_name = document.getElementById("whiteboard_name")
+	var top_bar = document.getElementById("top_bar");
 
-  save_icon.onclick = saveFile;
- // home_icon.onclick = saveFile;
+	save_icon.onclick = saveFile;
+	// home_icon.onclick = saveFile;
 
 
 	colorButton.onChange = changeColor();
-  whiteboard_name.onkeydown = editWhiteboardName;
-  whiteboard_name.onblur = whiteboardNameBlur;
+	whiteboard_name.onkeydown = editWhiteboardName;
+	whiteboard_name.onblur = whiteboardNameBlur;
 
 	share_icon.onclick = displayShareForm;
 	share_form.style.display = "none";
@@ -277,11 +277,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	text_icon.onclick = displayTextSubmission;
 
 	pen_icon.onclick = setPen;
-  thickness_icon.onclick = displayThicknessSlider;
+	thickness_icon.onclick = displayThicknessSlider;
 
 	// eraser
 	eraser.onclick = setErase;
-  download_icon.onclick = downloadAsPng;
+	download_icon.onclick = downloadAsPng;
 
 	// Change color
 	var colorHTML = document.getElementById("color");
