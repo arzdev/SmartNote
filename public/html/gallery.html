@@ -17,6 +17,10 @@
 					var listOfKeys = [];
 					for (var key in responseText_JSON) {
 						if (responseText_JSON.hasOwnProperty(key)) {
+
+							if(responseText_JSON[key] == "null") // skip initial image created when added to Firebase
+								continue;
+						
 							console.log(key + " -> " + responseText_JSON[key]);
 							var imageDiv = document.createElement("img");
 							imageDiv.src = String(responseText_JSON[key]);

@@ -115,19 +115,29 @@ app.get('/auth/google/callback',
 app.get("/gallery", (req, res) => {
 	var url = req.query.id;
 	console.log(url); // prints value
-	var ref = firebase.database().ref("users/" + url + "/image");
 
-	ref.on(
-		"value",
-		function (snapshot) {
-			imgDatabase = JSON.stringify(snapshot.val());
-			// console.log(imgDatebase)
-		},
+	// Detect if GoogleID is in Firebase
+	var accountRef = firebase.database().ref("users/");
+
+	accountRef.once('value', function (snapshot) {
+		if (snapshot.hasChild(url)) {
+		}
+		else {
+			console.log("Google Account doesn't exist in FireBase! Added!")
+			writeUserData(url)
+		}
+	});
+
+	var ref = firebase.database().ref("users/" + url + "/images");
+
+	ref.on('value', function (snapshot) {
+		imgDatabase = JSON.stringify(snapshot.val());
+	},
 		function (error) {
 			console.log("Error: " + error.code);
 		}
 	);
-	// writeUserData(url);
+
 	res.render("gallery.html");
 });
 
@@ -219,6 +229,7 @@ function writeUserData(userId) {
 		.ref("users/" + userId)
 		.set({
 			username: "TEMP",
+			images: { "null": "null" }
 		});
 }
 
@@ -229,17 +240,4 @@ function updateCanvas(host_id, user_socket, roomid) {
 		stroke = history[event]["stroke"];
 		host_socket.to(user_socket).emit("mouse", stroke);
 	}
-}
-
-function writeUserData(userId, userMail, userName, userPic) {
-	googleID = userId;
-
-	firebase
-		.database()
-		.ref("users/" + userId)
-		.set({
-			name: "TEMP",
-			email: "TEMP",
-			profile_picture: "TEMP",
-		});
 }
