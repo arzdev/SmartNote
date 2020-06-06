@@ -211,8 +211,8 @@ function newConnection(socket) {
 	});
 
   socket.on("save", function (data) {
-    console.log("save recieved")
-    console.log(data)
+    var name = data["name"]
+    var imgsrc = data["data"]
   })
 }
 

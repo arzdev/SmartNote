@@ -230,7 +230,8 @@ function saveFile() {
   thumbs.push(img);
   img.save(frameCount, '.png');
   imgurl = img.canvas.toDataURL()
-  socket.emit('save', imgurl)
+  saveLoad = {"data": imgurl, "name": document.getElementById("whiteboard_name").textContent}
+  socket.emit('save', saveLoad)
 
 }
 
