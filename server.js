@@ -209,6 +209,11 @@ function newConnection(socket) {
 		console.log("req recieved");
 		socket.emit("room", roomid);
 	});
+
+  socket.on("save", function (data) {
+    console.log("save recieved")
+    console.log(data)
+  })
 }
 
 function updateCanvas(host_id, user_socket, roomid) {

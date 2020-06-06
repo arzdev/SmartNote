@@ -9,11 +9,13 @@ var roomId = "";
 var imgSrc = "";
 var loadBackground = false;
 var erasing = false;
+var dy = 0;
+var cnv;
 
 function setup() {
 	// put setup code here
-  var dy = document.getElementById("top_bar").offsetHeight;
-	var cnv = createCanvas(windowWidth, windowHeight - dy);
+  dy = document.getElementById("top_bar").offsetHeight;
+	cnv = createCanvas(windowWidth, windowHeight - dy);
   cnv.position(0,dy)
 	background(255);
 
@@ -222,6 +224,16 @@ function submitShareForm(e) {
 	fillingForm = false;
 }
 
+function saveFile() {
+  const thumbs = [];
+  const img = get();
+  thumbs.push(img);
+  img.save(frameCount, '.png');
+  imgurl = img.canvas.toDataURL()
+  socket.emit('save', imgurl)
+
+}
+
 document.addEventListener("DOMContentLoaded", (event) => {
 	// make sure the website is fully downloaded
 
@@ -238,6 +250,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var eraser = document.getElementById("eraser");
   var whiteboard_name = document.getElementById("whiteboard_name")
   var top_bar = document.getElementById("top_bar");
+
+  save_icon.onclick = saveFile;
 
 
 	colorButton.onChange = changeColor();
