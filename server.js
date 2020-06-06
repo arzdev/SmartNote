@@ -1,5 +1,18 @@
 var express = require("express"); // import express
 var app = express(); // make express app
+const passport = require('passport');
+const auth = require('./auth');
+const cookieParser = require('cookie-parser')
+const cookieSession = require('cookie-session');
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['123bigoldsecretkeyxD']
+}));
+app.use(cookieParser());
+
+auth(passport);
+app.use(passport.initialize());
 
 require("dotenv").config();
 
@@ -56,7 +69,13 @@ var RoomManager = require("./RoomManager.js");
 var room_manager = new RoomManager().getInstance();
 
 app.get("/", (req, res) => {
-	res.render("landing.html");
+  if (req.session.token) {
+    console.log('should true')
+    res.render("loggedin.html")
+  }
+  else{
+    res.render("landing.html");
+  }
 });
 
 app.get("/about", (req, res) => {
@@ -68,12 +87,30 @@ app.get("/signup", (req, res) => {
 });
 
 app.get("/pricing", (req, res) => {
+  console.log(req.session.token);
 	res.render("pricing.html");
 });
 
 app.get("/features", (req, res) => {
 	res.render("features.html");
 });
+
+app.get('/auth/google', passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile']
+}));
+
+app.get('/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/'
+    }),
+    (req, res) => {
+      req.session.token = req.user.token;
+      console.log('prof_')
+      console.log(req.user.profile.id)
+      req.session.prof_id = req.user.profile.id;
+      res.redirect("/")
+    }
+);
 
 app.get("/gallery", (req, res) => {
 	var url = req.query.id;
