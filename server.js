@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser')
 const cookieSession = require('cookie-session');
 
 app.use(cookieSession({
-    name: 'session',
-    keys: ['123bigoldsecretkeyxD']
+	name: 'session',
+	keys: ['123bigoldsecretkeyxD']
 }));
 app.use(cookieParser());
 
@@ -69,13 +69,13 @@ var RoomManager = require("./RoomManager.js");
 var room_manager = new RoomManager().getInstance();
 
 app.get("/", (req, res) => {
-  if (req.session.token) {
-    console.log('should true')
-    res.render("loggedin.html")
-  }
-  else{
-    res.render("landing.html");
-  }
+	if (req.session.token) {
+		console.log('should true')
+		res.render("loggedin.html")
+	}
+	else {
+		res.render("landing.html");
+	}
 });
 
 app.get("/about", (req, res) => {
@@ -87,7 +87,7 @@ app.get("/signup", (req, res) => {
 });
 
 app.get("/pricing", (req, res) => {
-  console.log(req.session.token);
+	console.log(req.session.token);
 	res.render("pricing.html");
 });
 
@@ -96,20 +96,20 @@ app.get("/features", (req, res) => {
 });
 
 app.get('/auth/google', passport.authenticate('google', {
-    scope: ['https://www.googleapis.com/auth/userinfo.profile']
+	scope: ['https://www.googleapis.com/auth/userinfo.profile']
 }));
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', {
-        failureRedirect: '/'
-    }),
-    (req, res) => {
-      req.session.token = req.user.token;
-      console.log('prof_')
-      console.log(req.user.profile.id)
-      req.session.prof_id = req.user.profile.id;
-      res.redirect("/")
-    }
+	passport.authenticate('google', {
+		failureRedirect: '/'
+	}),
+	(req, res) => {
+		req.session.token = req.user.token;
+		console.log('prof_')
+		console.log(req.user.profile.id)
+		req.session.prof_id = req.user.profile.id;
+		res.redirect("/")
+	}
 );
 
 app.get("/gallery", (req, res) => {
@@ -118,7 +118,8 @@ app.get("/gallery", (req, res) => {
     res.redirect("/")
   }
   else{
-
+	url = req.session.prof_id
+	console.log(url); // prints value
     // Detect if GoogleID is in Firebase
     var accountRef = firebase.database().ref("users/");
 
@@ -149,12 +150,16 @@ app.post("/myform", function (req, res) {
 	var myText = req.query.mytext; //mytext is the name of your input box
 });
 
-app.post("/save", function (req,res) {
-  imgsrc = req.body["data"]
-  name = req.body["name"]
+app.post("/save", function (req, res) {
+	imgsrc = req.body["data"]
+	name = req.body["name"]
 
-  console.log(imgsrc)
-  console.log(req.session.prof_id)
+	var accountRef = firebase.database().ref("users/");
+
+	var myObj = {};
+	myObj[name] = imgsrc;
+
+	accountRef.child(String(req.session.prof_id) + "/images").update(myObj)
 })
 
 app.get("/canvas", (req, res) => {
@@ -216,10 +221,10 @@ function newConnection(socket) {
 		socket.emit("room", roomid);
 	});
 
-  socket.on("save", function (data) {
-    var name = data["name"]
-    var imgsrc = data["data"]
-  })
+	socket.on("save", function (data) {
+		var name = data["name"]
+		var imgsrc = data["data"]
+	})
 }
 
 function updateCanvas(host_id, user_socket, roomid) {
@@ -235,13 +240,10 @@ function updateCanvas(host_id, user_socket, roomid) {
 
 function writeUserData(userId) {
 	googleID = userId;
-	firebase
-		.database()
-		.ref("users/" + userId)
-		.set({
-			username: "TEMP",
-			images: { "null": "null" }
-		});
+	firebase.database().ref("users/" + userId).set({
+		username: "TEMP",
+		images: { "null": "null" }
+	});
 }
 
 function updateCanvas(host_id, user_socket, roomid) {
