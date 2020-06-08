@@ -99,6 +99,10 @@ app.get('/auth/google', passport.authenticate('google', {
 	scope: ['https://www.googleapis.com/auth/userinfo.profile']
 }));
 
+app.get('/up', (req, res) => {
+	res.send({"hello": "hello"})
+})
+
 app.get('/auth/google/callback',
 	passport.authenticate('google', {
 		failureRedirect: '/'
@@ -189,7 +193,6 @@ function createRandomURL() {
 	console.log("new url is: " + text);
 	return text;
 }
-
 var socket = require("socket.io");
 var io = socket(server);
 console.log(server);
@@ -227,9 +230,10 @@ function newConnection(socket) {
 	})
 }
 
+
 function updateCanvas(host_id, user_socket, roomid) {
 	host_socket = io.sockets.connected[host_id];
-	if (typeof host_socket !== "undefined") {
+	if (host_socket !== undefined) {
 		history = room_manager.get_history(roomid);
 		for (event in history) {
 			stroke = history[event]["stroke"];
