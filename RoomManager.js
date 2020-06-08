@@ -20,7 +20,10 @@ class RoomManager{
   }
 
   get_history(room_name){
-    return this.get_room(room_name)["history"]
+    if(this.room_exists(room_name)){
+	    return this.get_room(room_name)["history"]
+    }
+	return {}
   }
   
   room_exists(room_name){
@@ -55,7 +58,9 @@ class RoomManager{
   }
 
   push_stroke(room_name, stroke){
-    this.get_history(room_name).push({"stroke": stroke})
+    if(this.room_exists(room_name)){
+      this.get_history(room_name).push({"stroke": stroke})
+    }
   }
 
   get_host_socket(room_name){

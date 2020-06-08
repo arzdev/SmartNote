@@ -3,59 +3,37 @@
 	<header>
 		<title>Gallery</title>
 		<link rel="stylesheet" type="text/css" href="../css/gallery.css" />
+		<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+		<script>
+		var firebaseConfig = {
+			apiKey: "AIzaSyBct07FmogeLJcN0keelvtK9lLrFmSEAb4",
+			authDomain: "smartnote-1590114095005.firebaseapp.com",
+			databaseURL: "https://smartnote-1590114095005.firebaseio.com/",
+			projectId: "smartnote-1590114095005",
+			storageBucket: "smartnote-1590114095005.appspot.com",
+			messagingSenderId: "667040488592",
+			appId: "1:667040488592:web:7b70f9deba4fb1f2ba4c15",
+			measurementId: "G-2680TNSY38",
+		};
+
+		var app_googleID = '';
+		
+		var xmlHttp;
+    	xmlHttp = new XMLHttpRequest(); 
+    	xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            console.log(xmlHttp.responseText); // "" (empty string)
+			app_googleID = xmlHttp.responseText;
+        	}
+    	};
+    	xmlHttp.open( "GET", '/googleID', true );
+    	xmlHttp.send( null );
+
+		firebase.initializeApp(firebaseConfig);
+		</script>
 	</header>
 
 	<head>
-		<script>
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function () {
-				if (this.readyState == 4 && this.status == 200) {
-					//var responseText_JSON = JSON.stringify(this.responseText)
-					//console.log(this.responseText)
-					var responseText_JSON = JSON.parse(this.responseText);
-					//console.log(responseText_JSON)
-					var listOfKeys = [];
-					for (var key in responseText_JSON) {
-						if (responseText_JSON.hasOwnProperty(key)) {
-
-							if(responseText_JSON[key] == "null") // skip initial image created when added to Firebase
-								continue;
-						
-							console.log(key + " -> " + responseText_JSON[key]);
-							var imageDiv = document.createElement("img");
-							imageDiv.src = String(responseText_JSON[key]);
-							imageDiv.setAttribute("class", "feature_image", String(key));
-							console.log(String(key));
-
-							var newDiv = document.createElement("div");
-							var aDiv = document.createElement("a");
-							aDiv.setAttribute("href", "http://www.google.com");
-
-							newDiv.class = "item";
-							newDiv.appendChild(aDiv).appendChild(imageDiv);
-							listOfKeys.push(String(key));
-							//test
-							var button = document.createElement("button");
-							button.innerHTML = "Delete Canvas";
-							button.setAttribute("id", String(key));
-							newDiv.appendChild(button); //this adds button to each but doesn't have right key
-							console.log("\n\nbutton key: " + String(key)); //instead do onlick event
-							button.setAttribute( "onclick", "functionName(this.id)");
-							document.getElementById("wrapper").appendChild(newDiv);
-						}
-					}
-				}
-			};
-
-			xhttp.open("GET", "get_images", true);
-			xhttp.send();
-		</script>
-
-		<script>
-			function functionName(id) {
-				alert("key: " + id);
-			}
-		</script>
 	</head>
 
 	<body>
@@ -65,6 +43,66 @@
 			</button>
 		</form>
 
-		<div class="wrapper" id="wrapper"></div>
+		<script>
+		function functionName(id) {
+			var defaultDatabase = firebase.database();
+			console.log('users/' + app_googleID + "/images/" + id)
+			var adaRef = defaultDatabase.ref('users/' + app_googleID + "/images/" + id);
+			adaRef.remove()
+			.then(function() {
+				console.log("Remove succeeded.")
+				location.reload();
+				// return false;
+			})
+			.catch(function(error) {
+				console.log("Remove failed: " + error.message)
+			});
+		}
+		</script>
+
+		<div class="wrapper" id="table-wrapper"></div>
+
+		<script>
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				//var responseText_JSON = JSON.stringify(this.responseText)
+				//console.log(this.responseText)
+				var responseText_JSON = JSON.parse(this.responseText);
+				//console.log(responseText_JSON)
+				var listOfKeys = [];
+				for (var key in responseText_JSON) {
+					if (responseText_JSON.hasOwnProperty(key)) {
+
+						if(responseText_JSON[key] == "null") // skip initial image created when added to Firebase
+							continue;
+					
+						console.log(key + " -> " + responseText_JSON[key]);
+						var imageDiv = document.createElement("img");
+						imageDiv.src = String(responseText_JSON[key]);
+						imageDiv.setAttribute("class", "feature_image", String(key));
+						console.log(String(key));
+
+						var newDiv = document.createElement("div");
+						var aDiv = document.createElement("a");
+						aDiv.setAttribute("href", "http://www.google.com");
+
+						newDiv.class = "item";
+						newDiv.appendChild(aDiv).appendChild(imageDiv);
+						listOfKeys.push(String(key));
+						//test
+						var button = document.createElement("button");
+						button.innerHTML = "Delete Canvas";
+						button.setAttribute("id", String(key));
+						newDiv.appendChild(button); //this adds button to each but doesn't have right key
+						button.setAttribute( "onclick", "functionName(this.id);");
+						document.getElementById("table-wrapper").appendChild(newDiv);
+					}
+				}
+			}
+		};
+		xhttp.open("GET", "get_images", true);
+		xhttp.send(null);
+	</script>
 	</body>
 </html>

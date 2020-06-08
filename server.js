@@ -166,6 +166,13 @@ app.post("/save", function (req, res) {
 	accountRef.child(String(req.session.prof_id) + "/images").update(myObj)
 })
 
+
+app.get("/googleID", function (req, res) {
+	res.setHeader("Content-Type", "application/json");
+	res.end(req.session.prof_id);
+});
+
+
 app.get("/canvas", (req, res) => {
 	res.render("canvas.html");
 	roomid = req.query.roomid;
